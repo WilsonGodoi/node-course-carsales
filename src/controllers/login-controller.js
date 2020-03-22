@@ -1,8 +1,21 @@
+const User = require("../models/User");
+const md5 = require("md5");
+const config = require("../config");
+const authService = require("../services/auth-service");
+
 module.exports = {
   async doLogin(req, res) {
-    if (req.body.login === "admin" && req.body.password === "admin") {
-      res.status(200).send({ jwt: "abc" });
+    const user = await User.findOne({
+      login: req.body.login,
+      password: md5(req.body.password + config.privateKey)
+    });
+    if (!user) {
+      return res.status(404).send("Usuário ou senha inválidos!");
     }
-    res.status(409).send("Usuário ou senha inválidos!");
+    const jwt = await authService.generateToken({
+      login: req.body.login,
+      name: req.body.name
+    });
+    res.status(201).send({ jwt });
   }
 };
