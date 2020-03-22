@@ -3,44 +3,35 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const routes = require("./routes");
-const User = require("./models/User");
+const config = require("./config");
+const userController = require("./controllers/user-controller");
 
 const app = express();
 
-const url = "mongodb://127.0.0.1:27017/car-sales";
-
-mongoose.connect(url, {
+mongoose.connect(config.connectionUrlDatabase, {
+  useCreateIndex: true,
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
 
 const db = mongoose.connection;
 db.once("open", _ => {
-  console.log("Database connected:", url);
+  console.log("Database connected:", config.connectionUrlDatabase);
 });
 db.on("error", err => {
   console.error("Database connection error:", err);
 });
 
-User.create({
-  login: "admin",
-  name: "admin",
-  password: "admin",
-  type: "ADMINISTRADOR",
-  active: true
-});
-
-const corsOptions = { origin: "http://127.0.0.1:4200" };
-app.use(cors(corsOptions));
+app.use(cors(config.corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(routes);
 
-const port = 8080;
-
-app.listen(port, () => {
-  console.log(`Express server is listening on port ${port}...`);
+app.listen(config.apiPort, () => {
+  console.log(`Express server is listening on port ${config.apiPort}...`);
 });
+
+userController.createAdmin();
 
 module.exports = app;

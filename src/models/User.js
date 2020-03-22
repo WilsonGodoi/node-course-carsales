@@ -24,6 +24,7 @@ const UserSchema = new mongoose.Schema({
   type: {
     type: String,
     required: true,
+    enum: ["ADMINISTRADOR", "VENDEDOR"],
     trim: true
   },
   active: {
