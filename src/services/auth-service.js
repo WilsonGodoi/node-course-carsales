@@ -14,14 +14,14 @@ exports.decodeToken = token => {
 exports.authorize = (req, res, next) => {
   let token = req.headers["authorization"];
   if (!token) {
-    res.status(401).json({ message: "Acesso restrito!" });
+    res.status(401).json("Acesso restrito!");
   } else {
     jwt.verify(
       token.replace("Bearer ", ""),
       config.privateKey,
       (error, decoded) => {
         if (error) {
-          res.status(401).json({ message: "Token inválido!" });
+          res.status(401).json("Token inválido!");
         } else {
           next();
         }
@@ -33,21 +33,21 @@ exports.authorize = (req, res, next) => {
 exports.isAdmin = (req, res, next) => {
   let token = req.headers["authorization"];
   if (!token) {
-    res.status(401).json({ message: "Acesso restrito!" });
+    res.status(401).json("Acesso restrito!");
   } else {
     jwt.verify(
       token.replace("Bearer ", ""),
       config.privateKey,
       (error, decoded) => {
         if (error) {
-          res.status(401).json({ message: "Token inválido!" });
+          res.status(401).json("Token inválido!");
         } else {
           if (decoded.roles.includes("ADMINISTRADOR")) {
             next();
           } else {
             res
               .status(401)
-              .send("Funcionalidade restrita para administradores!");
+              .json("Funcionalidade restrita para administradores!");
           }
         }
       }

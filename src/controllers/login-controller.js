@@ -10,7 +10,7 @@ module.exports = {
       password: md5(req.body.password + config.privateKey)
     });
     if (!user) {
-      return res.status(404).send("Usuário ou senha inválidos!");
+      return res.status(404).json("Usuário ou senha inválidos!");
     }
     const jwt = await authService.generateToken({
       login: req.body.login,

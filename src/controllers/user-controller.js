@@ -32,13 +32,13 @@ module.exports = {
 
       const userSearch = await userRepository.getByLogin(login);
       if (userSearch) {
-        return res.status(400).send({ message: "Usuário já cadastrado!" });
+        return res.status(400).json("Usuário já cadastrado!");
       }
 
       const newUser = await userRepository.create(user);
       return res.status(201).send(newUser);
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(400).json(error);
     }
   },
 
@@ -47,9 +47,7 @@ module.exports = {
       users = await userRepository.list();
       return res.status(200).send(users);
     } catch (error) {
-      return res
-        .status(400)
-        .send({ message: "Não foi possível listar os usuários!" });
+      return res.status(400).json("Não foi possível listar os usuários!");
     }
   },
 
@@ -70,14 +68,14 @@ module.exports = {
       );
       return res.status(200).send({ message: "Usuário alterado com sucesso!" });
     } catch (error) {
-      return res.status(400).send({ message: "Falha ao alterar usuário!" });
+      return res.status(400).json("Falha ao alterar usuário!");
     }
   },
 
   async delete(req, res) {
     const user = await User.findOne({ _id: req.params.id });
     if (!user) {
-      return res.status(400).json({ message: "Falha ao remover usuário!" });
+      return res.status(400).json("Falha ao remover usuário!");
     }
     await User.deleteOne({ _id: user._id });
     return res.status(200).json({ message: "Usuário removido" });

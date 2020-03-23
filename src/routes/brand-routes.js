@@ -10,4 +10,10 @@ routes.get(
   BrandController.list
 );
 
+routes.post(
+  "/api/auth/admin/brands",
+  authService.isAdmin,
+  BrandController.create
+);
+
 module.exports = routes;
