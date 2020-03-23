@@ -14,7 +14,8 @@ module.exports = {
     }
     const jwt = await authService.generateToken({
       login: req.body.login,
-      name: req.body.name
+      name: req.body.name,
+      roles: user.roles
     });
     res.status(201).send({ jwt });
   }

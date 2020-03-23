@@ -3,7 +3,6 @@ module.exports = {
   connectionUrlDatabase: "mongodb://127.0.0.1:27017/car-sales",
   apiPort: 8080,
   corsOptions: {
-    origin: "http://127.0.0.1:4200",
-    origin: "http://localhost:4200"
+    origin: ["http://127.0.0.1:4200", "http://localhost:4200"]
   }
 };

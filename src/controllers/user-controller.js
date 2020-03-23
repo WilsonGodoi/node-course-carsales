@@ -10,7 +10,8 @@ module.exports = {
         name: "admin",
         password: md5("admin" + config.privateKey),
         type: "ADMINISTRADOR",
-        active: true
+        active: true,
+        roles: ["ADMINISTRADOR"]
       };
 
       if (await User.findOne({ login: user.login, name: user.name })) {
@@ -37,7 +38,8 @@ module.exports = {
         name,
         password: md5(password + config.privateKey),
         type,
-        active
+        active,
+        roles: [type]
       });
       user.save();
       return res.status(201).send(user);
@@ -48,7 +50,7 @@ module.exports = {
 
   async list(req, res) {
     try {
-      users = await User.find({});
+      users = await User.find({}, "login name type active");
       users.map(user => (user.id = user._id));
       return res.status(200).send(users);
     } catch (error) {

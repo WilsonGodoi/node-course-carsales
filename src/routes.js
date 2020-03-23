@@ -12,18 +12,18 @@ routes.get("/api/loja/ping", PingController.publicPing);
 
 routes.post(
   "/api/auth/admin/users",
-  authService.authorize,
+  authService.isAdmin,
   UserController.create
 );
 routes.put(
   "/api/auth/admin/users/:id",
-  authService.authorize,
+  authService.isAdmin,
   UserController.edit
 );
 routes.get("/api/auth/admin/users", authService.authorize, UserController.list);
 routes.delete(
   "/api/auth/admin/users/:id",
-  authService.authorize,
+  authService.isAdmin,
   UserController.delete
 );
 

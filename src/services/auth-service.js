@@ -29,3 +29,28 @@ exports.authorize = (req, res, next) => {
     );
   }
 };
+
+exports.isAdmin = (req, res, next) => {
+  let token = req.headers["authorization"];
+  if (!token) {
+    res.status(401).json({ message: "Acesso restrito!" });
+  } else {
+    jwt.verify(
+      token.replace("Bearer ", ""),
+      config.privateKey,
+      (error, decoded) => {
+        if (error) {
+          res.status(401).json({ message: "Token inválido!" });
+        } else {
+          if (decoded.roles.includes("ADMINISTRADOR")) {
+            next();
+          } else {
+            res.status(401).json({
+              message: "Funcionalidade restrita para administradores!"
+            });
+          }
+        }
+      }
+    );
+  }
+};
