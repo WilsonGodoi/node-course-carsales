@@ -44,8 +44,7 @@ module.exports = {
 
   async list(req, res) {
     try {
-      users = await User.find({}, "login name type active");
-      users.map(user => (user.id = user._id));
+      users = await userRepository.list();
       return res.status(200).send(users);
     } catch (error) {
       return res

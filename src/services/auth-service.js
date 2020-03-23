@@ -45,9 +45,9 @@ exports.isAdmin = (req, res, next) => {
           if (decoded.roles.includes("ADMINISTRADOR")) {
             next();
           } else {
-            res.status(401).json({
-              message: "Funcionalidade restrita para administradores!"
-            });
+            res
+              .status(401)
+              .send("Funcionalidade restrita para administradores!");
           }
         }
       }

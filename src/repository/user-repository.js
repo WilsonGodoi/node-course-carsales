@@ -7,6 +7,12 @@ exports.getByLogin = login => {
   return User.findOne({ login });
 };
 
+exports.list = async () => {
+  const users = await User.find({}, "login name type active");
+  users.map(user => (user.id = user._id));
+  return users;
+};
+
 exports.create = user => {
   const { login, name, password, type, active } = user;
   return User.create({
