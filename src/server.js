@@ -4,9 +4,6 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const config = require("./config");
 const userController = require("./controllers/user-controller");
-const userRoutes = require("./routes/user-routes");
-const loginRoutes = require("./routes/login-routes");
-const pingRoutes = require("./routes/ping-routes");
 
 const app = express();
 
@@ -28,9 +25,15 @@ app.use(cors(config.corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const userRoutes = require("./routes/user-routes");
+const loginRoutes = require("./routes/login-routes");
+const pingRoutes = require("./routes/ping-routes");
+const brandRoutes = require("./routes/brand-routes");
+
 app.use(userRoutes);
 app.use(loginRoutes);
 app.use(pingRoutes);
+app.use(brandRoutes);
 
 app.listen(config.apiPort, () => {
   console.log(`Express server is listening on port ${config.apiPort}...`);
