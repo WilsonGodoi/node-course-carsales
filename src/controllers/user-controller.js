@@ -1,6 +1,7 @@
 const config = require("../config");
 const md5 = require("md5");
 const User = require("../models/User");
+const userRepository = require("../repository/user-repository");
 
 module.exports = {
   async createAdmin() {
@@ -8,17 +9,17 @@ module.exports = {
       const user = {
         login: "admin",
         name: "admin",
-        password: md5("admin" + config.privateKey),
+        password: "admin",
         type: "ADMINISTRADOR",
         active: true,
         roles: ["ADMINISTRADOR"]
       };
 
-      if (await User.findOne({ login: user.login, name: user.name })) {
+      if (await userRepository.getByLogin(user.login)) {
         return;
       }
 
-      await User.create(user);
+      await userRepository.create(user);
     } catch (error) {
       console.log(error);
     }
@@ -27,22 +28,15 @@ module.exports = {
   async create(req, res) {
     try {
       const { login, name, password, type, active } = req.body;
+      const user = { login, name, password, type, active };
 
-      userSearch = await User.findOne({ login, name });
+      const userSearch = await userRepository.getByLogin(login);
       if (userSearch) {
         return res.status(400).send({ message: "Usuário já cadastrado!" });
       }
 
-      user = await User.create({
-        login,
-        name,
-        password: md5(password + config.privateKey),
-        type,
-        active,
-        roles: [type]
-      });
-      user.save();
-      return res.status(201).send(user);
+      const newUser = await userRepository.create(user);
+      return res.status(201).send(newUser);
     } catch (error) {
       return res.status(400).send(error);
     }
