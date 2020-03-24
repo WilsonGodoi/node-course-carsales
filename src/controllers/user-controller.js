@@ -54,7 +54,7 @@ module.exports = {
   async edit(req, res) {
     const { login, name, password, type, active } = req.body;
     try {
-      await User.findOneAndUpdate(
+      await User.findByIdAndUpdate(
         { _id: req.params.id },
         {
           $set: {

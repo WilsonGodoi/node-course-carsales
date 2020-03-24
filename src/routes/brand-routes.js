@@ -16,4 +16,16 @@ routes.post(
   BrandController.create
 );
 
+routes.put(
+  "/api/auth/admin/brands/:id",
+  authService.isAdmin,
+  BrandController.edit
+);
+
+routes.delete(
+  "/api/auth/admin/brands/:id",
+  authService.isAdmin,
+  BrandController.delete
+);
+
 module.exports = routes;

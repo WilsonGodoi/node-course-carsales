@@ -3,8 +3,8 @@ const User = require("../models/User");
 const md5 = require("md5");
 const config = require("../config");
 
-exports.getByLogin = login => {
-  return User.findOne({ login });
+exports.getByLogin = async login => {
+  return await User.findOne({ login });
 };
 
 exports.list = async () => {
@@ -13,9 +13,9 @@ exports.list = async () => {
   return users;
 };
 
-exports.create = user => {
+exports.create = async user => {
   const { login, name, password, type, active } = user;
-  return User.create({
+  return await User.create({
     login,
     name,
     password: md5(password + config.privateKey),
