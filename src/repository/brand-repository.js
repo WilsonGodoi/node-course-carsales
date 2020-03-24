@@ -1,4 +1,4 @@
-const Brand = require("../models/Brand");
+const Brand = require('../models/Brand');
 
 exports.getById = async id => {
   return await Brand.findOne({ _id: id });
@@ -9,7 +9,7 @@ exports.getByBrand = async brand => {
 };
 
 exports.list = async () => {
-  const brands = await Brand.find({}, "brand active");
+  const brands = await Brand.find({}, 'brand active');
   brands.map(user => (user.id = user._id));
   return brands;
 };
@@ -18,7 +18,7 @@ exports.create = async data => {
   const { brand, active } = data;
   return await Brand.create({
     brand,
-    active
+    active,
   });
 };
 
@@ -28,8 +28,8 @@ exports.edit = async data => {
     {
       $set: {
         brand: data.brand,
-        active: data.active
-      }
+        active: data.active,
+      },
     }
   );
   return await this.getById(data.id);
