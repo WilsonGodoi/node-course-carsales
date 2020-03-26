@@ -3,6 +3,6 @@ const LoginController = require('../controllers/login-controller');
 
 const routes = Router();
 
-routes.post('/api/loja/login', LoginController.doLogin);
+routes.post('/', LoginController.doLogin);
 
-module.exports = routes;
+module.exports = app => app.use('/api/loja/login', routes);

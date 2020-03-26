@@ -4,28 +4,12 @@ const authService = require('../services/auth-service');
 
 const routes = Router();
 
-routes.get(
-  '/api/auth/admin/brands',
-  authService.authorize,
-  BrandController.list
-);
+routes.get('/', authService.authorize, BrandController.list);
 
-routes.post(
-  '/api/auth/admin/brands',
-  authService.isAdmin,
-  BrandController.create
-);
+routes.post('/', authService.isAdmin, BrandController.create);
 
-routes.put(
-  '/api/auth/admin/brands/:id',
-  authService.isAdmin,
-  BrandController.edit
-);
+routes.put('/:id', authService.isAdmin, BrandController.edit);
 
-routes.delete(
-  '/api/auth/admin/brands/:id',
-  authService.isAdmin,
-  BrandController.delete
-);
+routes.delete('/:id', authService.isAdmin, BrandController.delete);
 
-module.exports = routes;
+module.exports = app => app.use('/api/auth/admin/brands', routes);
