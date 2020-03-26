@@ -6,6 +6,30 @@ exports.getByLogin = async login => {
   return await User.findOne({ login });
 };
 
+exports.getCurrent = async req => {
+  return await User.findById(req.userId);
+};
+
+exports.passwordMatches = async (req, password) => {
+  const currentUser = await this.getCurrent(req);
+  return md5(password + config.privateKey) == currentUser.password;
+};
+
+exports.updateOwnPassword = async (req, newPassword) => {
+  const currentUser = await this.getCurrent(req);
+  if (md5(newPassword + config.privateKey) == currentUser.password) {
+    throw new Error('A nova senha deve ser diferente da senha atual!');
+  }
+  await User.findByIdAndUpdate(
+    { _id: req.userId },
+    {
+      $set: {
+        password: md5(password + config.privateKey),
+      },
+    }
+  );
+};
+
 exports.list = async () => {
   const users = await User.find({}, 'login name type active');
   users.map(user => (user.id = user._id));

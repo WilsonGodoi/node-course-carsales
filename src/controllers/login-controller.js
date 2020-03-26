@@ -13,9 +13,10 @@ module.exports = {
       return res.status(404).json('Usuário ou senha inválidos!');
     }
     const jwt = await authService.generateToken({
-      login: req.body.login,
-      name: req.body.name,
+      name: user.name,
+      login: user.login,
       roles: user.roles,
+      _id: user._id,
     });
     res.status(201).send({ jwt });
   },

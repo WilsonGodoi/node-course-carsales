@@ -4,12 +4,18 @@ const UserController = require('../controllers/user-controller');
 
 const routes = Router();
 
-routes.get('/', authService.authorize, UserController.list);
+routes.get('/admin/users', authService.authorize, UserController.list);
 
-routes.post('/', authService.isAdmin, UserController.create);
+routes.post('/admin/users', authService.isAdmin, UserController.create);
 
-routes.put('/:id', authService.isAdmin, UserController.edit);
+routes.put('/admin/users/:id', authService.isAdmin, UserController.edit);
+
+routes.put(
+  '/users/current/password',
+  authService.authorize,
+  UserController.changePassword
+);
 
 routes.delete('/:id', authService.isAdmin, UserController.delete);
 
-module.exports = app => app.use('/api/auth/admin/users', routes);
+module.exports = app => app.use('/api/auth', routes);

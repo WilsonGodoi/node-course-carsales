@@ -1,9 +1,9 @@
-"use strict";
-const jwt = require("jsonwebtoken");
-const config = require("../config");
+'use strict';
+const jwt = require('jsonwebtoken');
+const config = require('../config');
 
 exports.generateToken = async data => {
-  return jwt.sign(data, config.privateKey, { expiresIn: "1d" });
+  return jwt.sign(data, config.privateKey, { expiresIn: '1d' });
 };
 
 exports.decodeToken = token => {
@@ -12,17 +12,18 @@ exports.decodeToken = token => {
 };
 
 exports.authorize = (req, res, next) => {
-  let token = req.headers["authorization"];
+  let token = req.headers['authorization'];
   if (!token) {
-    res.status(401).json("Acesso restrito!");
+    res.status(401).json('Acesso restrito!');
   } else {
     jwt.verify(
-      token.replace("Bearer ", ""),
+      token.replace('Bearer ', ''),
       config.privateKey,
       (error, decoded) => {
         if (error) {
-          res.status(401).json("Token inválido!");
+          res.status(401).json('Token inválido!');
         } else {
+          req.userId = decoded._id;
           next();
         }
       }
@@ -31,23 +32,24 @@ exports.authorize = (req, res, next) => {
 };
 
 exports.isAdmin = (req, res, next) => {
-  let token = req.headers["authorization"];
+  let token = req.headers['authorization'];
   if (!token) {
-    res.status(401).json("Acesso restrito!");
+    res.status(401).json('Acesso restrito!');
   } else {
     jwt.verify(
-      token.replace("Bearer ", ""),
+      token.replace('Bearer ', ''),
       config.privateKey,
       (error, decoded) => {
         if (error) {
-          res.status(401).json("Token inválido!");
+          res.status(401).json('Token inválido!');
         } else {
-          if (decoded.roles.includes("ADMINISTRADOR")) {
+          if (decoded.roles.includes('ADMINISTRADOR')) {
+            req.userId = decoded._id;
             next();
           } else {
             res
               .status(401)
-              .json("Funcionalidade restrita para administradores!");
+              .json('Funcionalidade restrita para administradores!');
           }
         }
       }

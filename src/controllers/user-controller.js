@@ -74,11 +74,37 @@ module.exports = {
   },
 
   async delete(req, res) {
-    const user = await User.findOne({ _id: req.params.id });
-    if (!user) {
+    try {
+      const user = await User.findOne({ _id: req.params.id4 });
+      if (!user) {
+        return res.status(400).json('Falha ao remover usuário!');
+      }
+      await User.deleteOne({ _id: user._id });
+      return res.status(200).json({ message: 'Usuário removido' });
+    } catch (error) {
       return res.status(400).json('Falha ao remover usuário!');
     }
-    await User.deleteOne({ _id: user._id });
-    return res.status(200).json({ message: 'Usuário removido' });
+  },
+
+  async changePassword(req, res) {
+    try {
+      const { currentPassword, newPassword, confirmPassword } = req.body;
+      const user = await userRepository.getCurrent(req);
+      if (!user) {
+        return res.status(400).json('Usuário não encontrado!');
+      }
+      if (newPassword != confirmPassword) {
+        return res
+          .status(400)
+          .json('A nova senha e confirmação devem ser iguais!');
+      }
+      if (!userRepository.passwordMatches(req, currentPassword)) {
+        return res.status(400).json('Senha atual inválida!');
+      }
+      await userRepository.updateOwnPassword(req, newPassword);
+      return res.status(200).json({ message: 'Senha alterada com sucesso!' });
+    } catch (error) {
+      return res.status(400).json(error.message);
+    }
   },
 };
