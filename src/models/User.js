@@ -39,6 +39,9 @@ const UserSchema = new mongoose.Schema({
       default: 'VENDEDOR',
     },
   ],
+  lastTimeLogin: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model('User', UserSchema);

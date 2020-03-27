@@ -1,6 +1,7 @@
 'use strict';
 const jwt = require('jsonwebtoken');
 const config = require('../config');
+const User = require('../models/User');
 
 exports.generateToken = async data => {
   return jwt.sign(data, config.privateKey, { expiresIn: '1d' });
@@ -19,10 +20,18 @@ exports.authorize = (req, res, next) => {
     jwt.verify(
       token.replace('Bearer ', ''),
       config.privateKey,
-      (error, decoded) => {
+      async (error, decoded) => {
         if (error) {
-          res.status(401).json('Token inválido!');
+          return res.status(401).json('Token inválido!');
         } else {
+          const user = await User.findById({ _id: decoded._id });
+          if (decoded.lastTimeLogin != user.lastTimeLogin) {
+            return res
+              .status(401)
+              .json(
+                'Sessão expirada! Realize um novo login para continuar utilizando a plataforma'
+              );
+          }
           req.userId = decoded._id;
           next();
         }
@@ -34,20 +43,20 @@ exports.authorize = (req, res, next) => {
 exports.isAdmin = (req, res, next) => {
   let token = req.headers['authorization'];
   if (!token) {
-    res.status(401).json('Acesso restrito!');
+    return res.status(401).json('Acesso restrito!');
   } else {
     jwt.verify(
       token.replace('Bearer ', ''),
       config.privateKey,
       (error, decoded) => {
         if (error) {
-          res.status(401).json('Token inválido!');
+          return res.status(401).json('Token inválido!');
         } else {
           if (decoded.roles.includes('ADMINISTRADOR')) {
             req.userId = decoded._id;
             next();
           } else {
-            res
+            return res
               .status(401)
               .json('Funcionalidade restrita para administradores!');
           }

@@ -12,12 +12,22 @@ module.exports = {
     if (!user) {
       return res.status(404).json('Usuário ou senha inválidos!');
     }
+    const lastTimeLogin = Date.now();
     const jwt = await authService.generateToken({
       name: user.name,
       login: user.login,
       roles: user.roles,
       _id: user._id,
+      lastTimeLogin,
     });
+    await User.findByIdAndUpdate(
+      { _id: user._id },
+      {
+        $set: {
+          lastTimeLogin,
+        },
+      }
+    );
     res.status(201).send({ jwt });
   },
 };
