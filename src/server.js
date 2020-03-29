@@ -32,6 +32,7 @@ require('./routes/login-routes')(app);
 require('./routes/logout-routes')(app);
 require('./routes/ping-routes')(app);
 require('./routes/brand-routes')(app);
+require('./routes/vehicle-routes')(app);
 
 app.listen(config.apiPort, () => {
   // eslint-disable-next-line no-console

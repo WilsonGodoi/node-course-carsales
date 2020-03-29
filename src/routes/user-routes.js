@@ -16,6 +16,6 @@ routes.put(
   UserController.changePassword
 );
 
-routes.delete('/:id', authService.isAdmin, UserController.delete);
+routes.delete('/admin/users/:id', authService.isAdmin, UserController.delete);
 
 module.exports = app => app.use('/api/auth', routes);

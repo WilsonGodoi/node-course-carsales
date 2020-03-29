@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+const autoIncrementModelID = require('./Counter');
 
 const UserSchema = new mongoose.Schema({
   id: {
-    type: String,
+    type: Number,
   },
   login: {
     type: String,
@@ -42,6 +43,15 @@ const UserSchema = new mongoose.Schema({
   lastTimeLogin: {
     type: String,
   },
+});
+
+UserSchema.pre('save', function (next) {
+  if (!this.isNew) {
+    next();
+    return;
+  }
+
+  autoIncrementModelID('User', this, next);
 });
 
 module.exports = mongoose.model('User', UserSchema);

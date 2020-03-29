@@ -13,48 +13,20 @@ exports.decodeToken = token => {
 };
 
 exports.authorize = (req, res, next) => {
-  let token = req.headers['authorization'];
-  if (!token) {
-    res.status(401).json('Acesso restrito!');
-  } else {
-    jwt.verify(
-      token.replace('Bearer ', ''),
-      config.privateKey,
-      async (error, decoded) => {
-        if (error) {
-          return res.status(401).json('Token inválido!');
-        } else {
-          const user = await User.findById({ _id: decoded._id });
-          if (decoded.lastTimeLogin != user.lastTimeLogin) {
-            return res
-              .status(401)
-              .json(
-                'Sessão expirada! Realize um novo login para continuar utilizando a plataforma'
-              );
-          }
-          req.userId = decoded._id;
-          next();
-        }
-      }
-    );
-  }
-};
-
-exports.isAdmin = (req, res, next) => {
-  let token = req.headers['authorization'];
-  if (!token) {
-    return res.status(401).json('Acesso restrito!');
-  } else {
-    jwt.verify(
-      token.replace('Bearer ', ''),
-      config.privateKey,
-      async (error, decoded) => {
-        if (error) {
-          return res.status(401).json('Token inválido!');
-        } else {
-          if (decoded.roles.includes('ADMINISTRADOR')) {
+  try {
+    let token = req.headers['authorization'];
+    if (!token) {
+      res.status(403).json('Acesso restrito!');
+    } else {
+      jwt.verify(
+        token.replace('Bearer ', ''),
+        config.privateKey,
+        async (error, decoded) => {
+          if (error) {
+            return res.status(403).json('Token inválido!');
+          } else {
             const user = await User.findById({ _id: decoded._id });
-            if (decoded.lastTimeLogin != user.lastTimeLogin) {
+            if (user && decoded.lastTimeLogin != user.lastTimeLogin) {
               return res
                 .status(401)
                 .json(
@@ -63,13 +35,53 @@ exports.isAdmin = (req, res, next) => {
             }
             req.userId = decoded._id;
             next();
-          } else {
-            return res
-              .status(401)
-              .json('Funcionalidade restrita para administradores!');
           }
         }
-      }
-    );
+      );
+    }
+  } catch (error) {
+    return res
+      .status(401)
+      .json(error.message);
+  }
+};
+
+exports.isAdmin = (req, res, next) => {
+  try {
+    let token = req.headers['authorization'];
+    if (!token) {
+      return res.status(403).json('Acesso restrito!');
+    } else {
+      jwt.verify(
+        token.replace('Bearer ', ''),
+        config.privateKey,
+        async (error, decoded) => {
+          if (error) {
+            return res.status(403).json('Token inválido!');
+          } else {
+            if (decoded.roles.includes('ADMINISTRADOR')) {
+              const user = await User.findById({ _id: decoded._id });
+              if (user && decoded.lastTimeLogin != user.lastTimeLogin) {
+                return res
+                  .status(401)
+                  .json(
+                    'Sessão expirada! Realize um novo login para continuar utilizando a plataforma'
+                  );
+              }
+              req.userId = decoded._id;
+              next();
+            } else {
+              return res
+                .status(401)
+                .json('Funcionalidade restrita para administradores!');
+            }
+          }
+        }
+      );
+    }
+  } catch (error) {
+    return res
+      .status(401)
+      .json(error.message);
   }
 };

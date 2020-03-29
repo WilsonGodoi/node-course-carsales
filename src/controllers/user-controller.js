@@ -55,8 +55,8 @@ module.exports = {
   async edit(req, res) {
     const { login, name, password, type, active } = req.body;
     try {
-      await User.findByIdAndUpdate(
-        { _id: req.params.id },
+      await User.findOneAndUpdate(
+        { id: req.params.id },
         {
           $set: {
             login,
@@ -75,11 +75,11 @@ module.exports = {
 
   async delete(req, res) {
     try {
-      const user = await User.findOne({ _id: req.params.id4 });
+      const user = await User.findOne({ id: req.params.id });
       if (!user) {
         return res.status(400).json('Falha ao remover usuário!');
       }
-      await User.deleteOne({ _id: user._id });
+      await User.deleteOne({ id: user.id });
       return res.status(200).json({ message: 'Usuário removido' });
     } catch (error) {
       return res.status(400).json('Falha ao remover usuário!');

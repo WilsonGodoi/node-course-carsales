@@ -42,8 +42,7 @@ exports.updateOwnPassword = async (req, newPassword) => {
 };
 
 exports.list = async () => {
-  const users = await User.find({}, 'login name type active');
-  users.map(user => (user.id = user._id));
+  const users = await User.find({}, '-_id id login name type active');
   return users;
 };
 
