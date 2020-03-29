@@ -48,11 +48,19 @@ exports.isAdmin = (req, res, next) => {
     jwt.verify(
       token.replace('Bearer ', ''),
       config.privateKey,
-      (error, decoded) => {
+      async (error, decoded) => {
         if (error) {
           return res.status(401).json('Token inválido!');
         } else {
           if (decoded.roles.includes('ADMINISTRADOR')) {
+            const user = await User.findById({ _id: decoded._id });
+            if (decoded.lastTimeLogin != user.lastTimeLogin) {
+              return res
+                .status(401)
+                .json(
+                  'Sessão expirada! Realize um novo login para continuar utilizando a plataforma'
+                );
+            }
             req.userId = decoded._id;
             next();
           } else {

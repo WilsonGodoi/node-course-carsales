@@ -10,6 +10,17 @@ exports.getCurrent = async req => {
   return await User.findById(req.userId);
 };
 
+exports.invalidSession = async req => {
+  await User.findByIdAndUpdate(
+    { _id: req.userId },
+    {
+      $set: {
+        lastTimeLogin: undefined,
+      },
+    }
+  );
+}
+
 exports.passwordMatches = async (req, password) => {
   const currentUser = await this.getCurrent(req);
   return md5(password + config.privateKey) == currentUser.password;

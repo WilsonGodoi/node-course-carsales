@@ -29,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 require('./routes/user-routes')(app);
 require('./routes/login-routes')(app);
+require('./routes/logout-routes')(app);
 require('./routes/ping-routes')(app);
 require('./routes/brand-routes')(app);
 
