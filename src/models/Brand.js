@@ -1,19 +1,29 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const autoIncrementModelID = require('./Counter');
 
 const schema = new mongoose.Schema({
   id: {
-    type: String
+    type: Number,
   },
-  brand: {
+  name: {
     type: String,
     required: true,
     trim: true,
-    unique: true
+    unique: true,
   },
   active: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
-module.exports = mongoose.model("Brand", schema);
+schema.pre('save', function (next) {
+  if (!this.isNew) {
+    next();
+    return;
+  }
+
+  autoIncrementModelID('Brand', this, next);
+});
+
+module.exports = mongoose.model('Brand', schema);

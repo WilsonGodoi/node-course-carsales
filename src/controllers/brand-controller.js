@@ -12,14 +12,14 @@ module.exports = {
 
   async create(req, res) {
     try {
-      const { brand, active } = req.body;
+      const { name, active } = req.body;
 
-      const brandSearch = await brandRepository.getByBrand(brand);
+      const brandSearch = await brandRepository.getByName(name);
       if (brandSearch) {
         return res.status(400).json('Marca já cadastrada!');
       }
 
-      const newBrand = await brandRepository.create({ brand, active });
+      const newBrand = await brandRepository.create({ name, active });
       return res.status(201).send(newBrand);
     } catch (error) {
       return res.status(400).json(error);
@@ -28,14 +28,14 @@ module.exports = {
 
   async edit(req, res) {
     try {
-      const { brand, active } = req.body;
+      const { name, active } = req.body;
 
       const brandSearch = await brandRepository.getById(req.params.id);
       if (!brandSearch) {
         return res.status(400).json('Marca não cadastrada!');
       }
       const editedBrand = await brandRepository.edit({
-        brand,
+        name,
         active,
         id: req.params.id,
       });

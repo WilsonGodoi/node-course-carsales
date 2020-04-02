@@ -4,20 +4,19 @@ exports.getById = async id => {
   return await Brand.findOne({ _id: id });
 };
 
-exports.getByBrand = async brand => {
-  return await Brand.findOne({ brand });
+exports.getByName = async name => {
+  return await Brand.findOne({ name });
 };
 
 exports.list = async () => {
-  const brands = await Brand.find({}, 'brand active');
-  brands.map(user => (user.id = user._id));
+  const brands = await Brand.find({}, '-_id id name active');
   return brands;
 };
 
 exports.create = async data => {
-  const { brand, active } = data;
+  const { name, active } = data;
   return await Brand.create({
-    brand,
+    name,
     active,
   });
 };
@@ -27,7 +26,7 @@ exports.edit = async data => {
     { _id: data.id },
     {
       $set: {
-        brand: data.brand,
+        name: data.name,
         active: data.active,
       },
     }
