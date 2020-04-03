@@ -10,6 +10,7 @@ const schema = new mongoose.Schema({
     required: true,
     trim: true,
     unique: true,
+    uppercase: true,
   },
   active: {
     type: Boolean,

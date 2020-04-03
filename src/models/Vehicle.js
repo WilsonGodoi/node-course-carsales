@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 const Brand = require('./Brand');
-const User = require('./User');
+const autoIncrementModelID = require('./Counter');
 
 const VehicleSchema = new mongoose.Schema({
+  id: {
+    type: Number,
+  },
   brand: {
     type: { Brand },
     required: true,
@@ -11,6 +14,7 @@ const VehicleSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+    uppercase: true,
   },
   active: {
     type: Boolean,
@@ -55,6 +59,14 @@ const VehicleSchema = new mongoose.Schema({
   seller: {
     type: String,
   },
+});
+
+VehicleSchema.pre('save', function (next) {
+  if (!this.isNew) {
+    next();
+    return;
+  }
+  autoIncrementModelID('Vehicle', this, next);
 });
 
 module.exports = mongoose.model('Vehicle', VehicleSchema);

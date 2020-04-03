@@ -50,7 +50,6 @@ UserSchema.pre('save', function (next) {
     next();
     return;
   }
-
   autoIncrementModelID('User', this, next);
 });
 
