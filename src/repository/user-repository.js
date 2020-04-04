@@ -19,7 +19,7 @@ exports.invalidSession = async req => {
       },
     }
   );
-}
+};
 
 exports.passwordMatches = async (req, password) => {
   const currentUser = await this.getCurrent(req);
@@ -42,8 +42,7 @@ exports.updateOwnPassword = async (req, newPassword) => {
 };
 
 exports.list = async () => {
-  const users = await User.find({}, '-_id id login name type active');
-  return users;
+  return await User.find({}, '-_id id login name type active');
 };
 
 exports.create = async user => {

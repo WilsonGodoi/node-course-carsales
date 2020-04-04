@@ -7,21 +7,14 @@ const userController = require('./controllers/user-controller');
 
 const app = express();
 
-mongoose.connect(config.connectionUrlDatabase, {
-  useCreateIndex: true,
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-const db = mongoose.connection;
-db.once('open', () => {
-  // eslint-disable-next-line no-console
-  console.log('Database connected:', config.connectionUrlDatabase);
-});
-db.on('error', err => {
-  // eslint-disable-next-line no-console
-  console.error('Database connection error:', err);
-});
+mongoose
+  .connect(config.connectionUrlDatabase, {
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log('Database connected:', config.connectionUrlDatabase))
+  .catch(error => console.error('Database connection error:', error));
 
 app.use(cors(config.corsOptions));
 app.use(bodyParser.json());
@@ -34,10 +27,9 @@ require('./routes/ping-routes')(app);
 require('./routes/brand-routes')(app);
 require('./routes/vehicle-routes')(app);
 
-app.listen(config.apiPort, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Express server is listening on port ${config.apiPort}...`);
-});
+app.listen(config.apiPort, () =>
+  console.log(`Express server is listening on port ${config.apiPort}...`)
+);
 
 userController.createAdmin();
 
