@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const autoIncrementModelID = require('./Counter');
+const Image = require('./Image');
 
 const UserSchema = new mongoose.Schema({
   id: {
@@ -42,6 +43,9 @@ const UserSchema = new mongoose.Schema({
   ],
   lastTimeLogin: {
     type: String,
+  },
+  image: {
+    type: { Image },
   },
 });
 

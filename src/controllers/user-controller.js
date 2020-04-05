@@ -2,6 +2,7 @@ const md5 = require('md5');
 const config = require('../config');
 const User = require('../models/User');
 const userRepository = require('../repository/user-repository');
+const imageRepository = require('../repository/image-repository');
 
 module.exports = {
   async createAdmin() {
@@ -40,6 +41,27 @@ module.exports = {
       return res.status(201).send(newUser);
     } catch (error) {
       return res.status(400).json(error);
+    }
+  },
+
+  async saveAvatar(req, res) {
+    try {
+      const { base64 } = req.body;
+      const currentUser = await userRepository.getCurrent(req);
+      const refId = currentUser._id;
+      const image = await imageRepository.create({ base64, refId });
+
+      await User.findOneAndUpdate(
+        { id: currentUser.id },
+        {
+          $set: {
+            image,
+          },
+        }
+      );
+      return res.status(200).send({ message: 'Usuário alterado com sucesso!' });
+    } catch (error) {
+      return res.status(400).json('Falha ao alterar usuário!');
     }
   },
 

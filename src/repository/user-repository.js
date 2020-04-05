@@ -42,7 +42,7 @@ exports.updateOwnPassword = async (req, newPassword) => {
 };
 
 exports.list = async () => {
-  return await User.find({}, '-_id id login name type active');
+  return await User.find({}, '-_id id login name type active image');
 };
 
 exports.create = async user => {
