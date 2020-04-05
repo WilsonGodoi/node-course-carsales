@@ -5,6 +5,11 @@ const UserController = require('../controllers/user-controller');
 const routes = Router();
 
 routes.get('/admin/users', authService.authorize, UserController.list);
+routes.get(
+  '/admin/users/current',
+  authService.authorize,
+  UserController.getCurrent
+);
 
 routes.post('/admin/users', authService.isAdmin, UserController.create);
 

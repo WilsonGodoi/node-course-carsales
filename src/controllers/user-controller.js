@@ -65,6 +65,18 @@ module.exports = {
     }
   },
 
+  async getCurrent(req, res) {
+    try {
+      const currentUser = await userRepository.getCurrent(req);
+      return res.status(200).send(currentUser);
+    } catch (error) {
+      console.log(error);
+      return res
+        .status(400)
+        .json('Não foi possível carregar o usuário logado!');
+    }
+  },
+
   async list(req, res) {
     try {
       const users = await userRepository.list();

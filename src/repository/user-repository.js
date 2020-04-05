@@ -7,6 +7,13 @@ exports.getByLogin = async login => {
 };
 
 exports.getCurrent = async req => {
+  return await User.findById(
+    req.userId,
+    '-_id id login name type active image'
+  );
+};
+
+getCurrentPrivate = async req => {
   return await User.findById(req.userId);
 };
 
@@ -22,12 +29,12 @@ exports.invalidSession = async req => {
 };
 
 exports.passwordMatches = async (req, password) => {
-  const currentUser = await this.getCurrent(req);
+  const currentUser = await this.getCurrentPrivate(req);
   return md5(password + config.privateKey) == currentUser.password;
 };
 
 exports.updateOwnPassword = async (req, newPassword) => {
-  const currentUser = await this.getCurrent(req);
+  const currentUser = await this.getCurrentPrivate(req);
   if (md5(newPassword + config.privateKey) == currentUser.password) {
     throw new Error('A nova senha deve ser diferente da senha atual!');
   }
