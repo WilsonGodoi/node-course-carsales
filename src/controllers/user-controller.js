@@ -48,7 +48,7 @@ module.exports = {
     try {
       const { base64 } = req.body;
       const currentUser = await userRepository.getCurrent(req);
-      const refId = currentUser._id;
+      const refId = currentUser.id;
       const image = await imageRepository.create({ base64, refId });
 
       await User.findOneAndUpdate(
@@ -80,6 +80,7 @@ module.exports = {
   async list(req, res) {
     try {
       const users = await userRepository.list();
+      // console.log(users);
       return res.status(200).send(users);
     } catch (error) {
       return res.status(400).json('Não foi possível listar os usuários!');
