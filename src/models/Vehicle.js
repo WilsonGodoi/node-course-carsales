@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Brand = require('./Brand');
+
 const autoIncrementModelID = require('./Counter');
 
 const VehicleSchema = new mongoose.Schema({
@@ -59,6 +60,7 @@ const VehicleSchema = new mongoose.Schema({
   seller: {
     type: String,
   },
+  pictures: [{ base64: { type: String } }],
 });
 
 VehicleSchema.pre('save', function (next) {

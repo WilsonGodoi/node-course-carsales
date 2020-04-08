@@ -2,7 +2,7 @@ const md5 = require('md5');
 const config = require('../config');
 const User = require('../models/User');
 const userRepository = require('../repository/user-repository');
-const imageRepository = require('../repository/image-repository');
+const crypto = require('crypto');
 
 module.exports = {
   async createAdmin() {
@@ -48,20 +48,19 @@ module.exports = {
     try {
       const { base64 } = req.body;
       const currentUser = await userRepository.getCurrent(req);
-      const refId = currentUser.id;
-      const image = await imageRepository.create({ base64, refId });
+      const id = crypto.randomBytes(16).toString('hex');
 
       await User.findOneAndUpdate(
         { id: currentUser.id },
         {
           $set: {
-            image,
+            image: { id, base64 },
           },
         }
       );
-      return res.status(200).send({ message: 'Usuário alterado com sucesso!' });
+      return res.status(200).send({ message: 'Avatar alterado com sucesso!' });
     } catch (error) {
-      return res.status(400).json('Falha ao alterar usuário!');
+      return res.status(400).json('Falha ao alterar avatar!');
     }
   },
 
@@ -80,7 +79,6 @@ module.exports = {
   async list(req, res) {
     try {
       const users = await userRepository.list();
-      // console.log(users);
       return res.status(200).send(users);
     } catch (error) {
       return res.status(400).json('Não foi possível listar os usuários!');
