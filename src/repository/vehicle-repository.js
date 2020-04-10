@@ -26,3 +26,14 @@ exports.savePicture = async (vehicleId, picture) => {
     }
   );
 };
+
+exports.deletePicture = async (vehicleId, pictureId) => {
+  return await Vehicle.findOneAndUpdate(
+    { id: vehicleId },
+    {
+      $pull: {
+        pictures: { _id: pictureId },
+      },
+    }
+  );
+};

@@ -18,4 +18,10 @@ routes.post(
   VehicleController.savePicture
 );
 
+routes.delete(
+  '/:id/pictures/:pictureId',
+  authService.isAdmin,
+  VehicleController.deletePicture
+);
+
 module.exports = app => app.use('/api/auth/admin/vehicles', routes);

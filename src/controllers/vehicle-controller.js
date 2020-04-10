@@ -23,6 +23,18 @@ module.exports = {
     }
   },
 
+  async deletePicture(req, res) {
+    try {
+      await vehicleRepository.deletePicture(
+        req.params.id,
+        req.params.pictureId
+      );
+      return res.status(200).send({ message: 'Imagem removida com sucesso!' });
+    } catch (error) {
+      return res.status(400).json(error.message);
+    }
+  },
+
   async list(req, res) {
     try {
       const vehicles = await vehicleRepository.list();
