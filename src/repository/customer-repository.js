@@ -1,5 +1,9 @@
 const Customer = require('../models/Customer');
 
+exports.getById = async id => {
+  return await Customer.findOne({ _id: id });
+};
+
 exports.getByEmail = async email => {
   return await Customer.findOne({ email });
 };
@@ -15,4 +19,18 @@ exports.create = async customer => {
     email,
     telephone,
   });
+};
+
+exports.edit = async data => {
+  await Customer.findOneAndUpdate(
+    { _id: data.id },
+    {
+      $set: {
+        name: data.name,
+        email: data.email,
+        telephone: data.telephone,
+      },
+    }
+  );
+  return await this.getById(data.id);
 };

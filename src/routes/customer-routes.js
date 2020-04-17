@@ -8,4 +8,6 @@ routes.get('/customers', authService.authorize, CustomerController.list);
 
 routes.post('/customers', authService.authorize, CustomerController.create);
 
+routes.put('/customers/:id', authService.authorize, CustomerController.edit);
+
 module.exports = app => app.use('/api/auth', routes);

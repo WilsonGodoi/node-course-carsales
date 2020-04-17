@@ -26,4 +26,24 @@ module.exports = {
       return res.status(400).json('Não foi possível listar os clientes!');
     }
   },
+
+  async edit(req, res) {
+    try {
+      const { name, email, telephone } = req.body;
+
+      const customerSearch = await customerRepository.getById(req.params.id);
+      if (!customerSearch) {
+        return res.status(400).json('Cliente não cadastrado!');
+      }
+      await customerRepository.edit({
+        name,
+        email,
+        telephone,
+        id: req.params.id,
+      });
+      return res.status(200).send({ message: 'Cliente alterado com sucesso!' });
+    } catch (error) {
+      return res.status(400).json('Não foi possível alterar o cliente!');
+    }
+  },
 };
