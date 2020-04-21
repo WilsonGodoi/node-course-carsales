@@ -1,11 +1,11 @@
 const Vehicle = require('../models/Vehicle');
 
 exports.list = async () => {
-  return await Vehicle.find({}, '-_id -__v -pictures');
+  return await Vehicle.find({}, '-__v -pictures');
 };
 
 exports.listPictures = async vehicleId => {
-  const { pictures } = await Vehicle.findOne({ id: vehicleId });
+  const { pictures } = await Vehicle.findOne({ _id: vehicleId });
   return pictures;
 };
 

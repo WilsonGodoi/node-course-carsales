@@ -49,7 +49,7 @@ module.exports = {
       const pictures = await vehicleRepository.listPictures(req.params.id);
       return res.status(200).send(pictures);
     } catch (error) {
-      return res.status(400).json('Não foi possível listar os veículos!');
+      return res.status(400).json('Não foi possível listar as imagens!');
     }
   },
 };

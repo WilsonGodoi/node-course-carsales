@@ -7,10 +7,7 @@ exports.getByLogin = async login => {
 };
 
 exports.getCurrent = async req => {
-  return await User.findById(
-    req.userId,
-    '-_id id login name type active image'
-  );
+  return await User.findById(req.userId, 'id login name type active image');
 };
 
 getCurrentPrivate = async req => {

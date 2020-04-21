@@ -35,6 +35,7 @@ require('./routes/ping-routes')(app);
 require('./routes/brand-routes')(app);
 require('./routes/vehicle-routes')(app);
 require('./routes/customer-routes')(app);
+require('./routes/sale-routes')(app);
 
 app.listen(config.apiPort, () =>
   console.log(`Express server is listening on port ${config.apiPort}...`)
