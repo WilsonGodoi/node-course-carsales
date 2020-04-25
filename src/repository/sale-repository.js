@@ -1,11 +1,13 @@
 const Sale = require('../models/Sale');
+const vehicleRepository = require('../repository/vehicle-repository');
 
 exports.create = async sale => {
-  const { customer, seller, vehicle, value } = sale;
+  await vehicleRepository.changeStatusToVENDIDO(sale.vehicleId);
+  const { customerId, sellerId, vehicleId, value } = sale;
   return await Sale.create({
-    customer,
-    seller,
-    vehicle,
+    customer: customerId,
+    seller: sellerId,
+    vehicle: vehicleId,
     value,
     date: new Date(),
   });

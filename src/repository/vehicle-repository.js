@@ -1,7 +1,18 @@
 const Vehicle = require('../models/Vehicle');
 
 exports.list = async () => {
-  return await Vehicle.find({}, '-__v -pictures');
+  return await Vehicle.find({ status: 'DISPONIVEL' }, '-__v -pictures');
+};
+
+exports.changeStatusToVENDIDO = async _id => {
+  return await Vehicle.findOneAndUpdate(
+    { _id },
+    {
+      $set: {
+        status: 'VENDIDO',
+      },
+    }
+  );
 };
 
 exports.listPictures = async vehicleId => {
