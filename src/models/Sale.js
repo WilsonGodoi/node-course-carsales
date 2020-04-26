@@ -36,10 +36,10 @@ SaleSchema.set('toJSON', {
   virtuals: true,
 });
 
-// Getter value
-SaleSchema.path('value').get(num => (num / 100).toFixed(2));
-
-// Setter value
-SaleSchema.path('value').set(num => num.toFixed(2));
+// // Getter value
+// SaleSchema.path('value').get(num => (num / 100).toFixed(2));
+//
+// // Setter value
+// SaleSchema.path('value').set(num => num.toFixed(2));
 
 module.exports = mongoose.model('Sale', SaleSchema);

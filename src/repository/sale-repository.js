@@ -12,3 +12,12 @@ exports.create = async sale => {
     date: new Date(),
   });
 };
+
+exports.list = async () => {
+  const sales = await Sale.find({})
+    .populate('seller', '-image')
+    .populate('customer', '-image')
+    .populate('vehicle', '-pictures');
+  console.log(sales);
+  return sales;
+};

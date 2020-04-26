@@ -45,17 +45,8 @@ const VehicleSchema = new mongoose.Schema({
     default: 'DISPONIVEL',
   },
   advertisedValue: {
-    type: String,
+    type: Number,
     required: true,
-  },
-  salesValue: {
-    type: String,
-  },
-  salesDate: {
-    type: Date,
-  },
-  seller: {
-    type: String,
   },
   pictures: [{ base64: { type: String } }],
 });
