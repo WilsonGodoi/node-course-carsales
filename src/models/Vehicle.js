@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const Brand = require('./Brand');
 
-const autoIncrementModelID = require('./Counter');
-
 const VehicleSchema = new mongoose.Schema({
   brand: {
     type: { Brand },

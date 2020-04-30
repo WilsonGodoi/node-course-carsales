@@ -25,11 +25,10 @@ exports.create = async vehicle => {
 };
 
 exports.savePicture = async (vehicleId, picture) => {
-  const vehicle = await Vehicle.findOne({ id: vehicleId });
-  let { pictures } = vehicle;
+  const { pictures } = await Vehicle.findOne({ _id: vehicleId });
   pictures.push(picture);
   return await Vehicle.findOneAndUpdate(
-    { id: vehicleId },
+    { _id: vehicleId },
     {
       $set: {
         pictures,
@@ -40,7 +39,7 @@ exports.savePicture = async (vehicleId, picture) => {
 
 exports.deletePicture = async (vehicleId, pictureId) => {
   return await Vehicle.findOneAndUpdate(
-    { id: vehicleId },
+    { _id: vehicleId },
     {
       $pull: {
         pictures: { _id: pictureId },
