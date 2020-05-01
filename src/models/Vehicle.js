@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const Brand = require('./Brand');
 
 const VehicleSchema = new mongoose.Schema({
   brand: {
-    type: { Brand },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Brand',
     required: true,
   },
   model: {

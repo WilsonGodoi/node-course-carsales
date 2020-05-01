@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
-const autoIncrementModelID = require('./Counter');
-const Image = require('./Image');
 
 const UserSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-  },
   login: {
     type: String,
     required: true,
@@ -44,17 +39,19 @@ const UserSchema = new mongoose.Schema({
   lastTimeLogin: {
     type: String,
   },
-  image: {
-    type: { Image },
+  imageBase64: {
+    type: String,
   },
 });
 
-UserSchema.pre('save', function (next) {
-  if (!this.isNew) {
-    next();
-    return;
-  }
-  autoIncrementModelID('User', this, next);
+// Duplicate the ID field.
+UserSchema.virtual('id').get(function () {
+  return this._id.toHexString();
+});
+
+// Ensure virtual fields are serialised.
+UserSchema.set('toJSON', {
+  virtuals: true,
 });
 
 module.exports = mongoose.model('User', UserSchema);

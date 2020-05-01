@@ -7,7 +7,10 @@ exports.getByLogin = async login => {
 };
 
 exports.getCurrent = async req => {
-  return await User.findById(req.userId, 'id login name type active image');
+  return await User.findById(
+    req.userId,
+    'id login name type active imageBase64'
+  );
 };
 
 getCurrentPrivate = async req => {
@@ -46,7 +49,7 @@ exports.updateOwnPassword = async (req, newPassword) => {
 };
 
 exports.list = async () => {
-  return await User.find({}, '-_id id login name type active image');
+  return await User.find({}, 'id login name type active image');
 };
 
 exports.create = async user => {

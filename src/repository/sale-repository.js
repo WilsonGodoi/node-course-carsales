@@ -16,7 +16,7 @@ exports.create = async sale => {
 
 exports.list = async () => {
   const sales = await Sale.find({})
-    .populate('seller', '-image')
+    .populate('seller', '-imageBase64')
     .populate('customer', '-image')
     .populate('vehicle', '-pictures');
   console.log(sales);

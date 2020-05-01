@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
-const autoIncrementModelID = require('./Counter');
 
-const schema = new mongoose.Schema({
-  id: {
-    type: Number,
-  },
+const BrandSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -18,13 +14,14 @@ const schema = new mongoose.Schema({
   },
 });
 
-schema.pre('save', function (next) {
-  if (!this.isNew) {
-    next();
-    return;
-  }
-
-  autoIncrementModelID('Brand', this, next);
+// Duplicate the ID field.
+BrandSchema.virtual('id').get(function () {
+  return this._id.toHexString();
 });
 
-module.exports = mongoose.model('Brand', schema);
+// Ensure virtual fields are serialised.
+BrandSchema.set('toJSON', {
+  virtuals: true,
+});
+
+module.exports = mongoose.model('Brand', BrandSchema);

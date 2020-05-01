@@ -46,15 +46,14 @@ module.exports = {
 
   async saveAvatar(req, res) {
     try {
-      const { base64 } = req.body;
+      const { imageBase64 } = req.body;
       const currentUser = await userRepository.getCurrent(req);
-      const id = crypto.randomBytes(16).toString('hex');
 
       await User.findOneAndUpdate(
-        { id: currentUser.id },
+        { _id: currentUser.id },
         {
           $set: {
-            image: { id, base64 },
+            imageBase64,
           },
         }
       );
