@@ -1,7 +1,10 @@
 const Vehicle = require('../models/Vehicle');
 
 exports.list = async () => {
-  return await Vehicle.find({ status: 'DISPONIVEL' }, '-__v -pictures');
+  return await Vehicle.find(
+    { status: 'DISPONIVEL' },
+    '-__v -pictures'
+  ).populate('brand', '-__v');
 };
 
 exports.changeStatusToVENDIDO = async _id => {

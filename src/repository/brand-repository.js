@@ -9,8 +9,7 @@ exports.getByName = async name => {
 };
 
 exports.list = async () => {
-  const brands = await Brand.find({}, 'id name active');
-  return brands;
+  return await Brand.find({});
 };
 
 exports.create = async data => {
