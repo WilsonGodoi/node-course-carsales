@@ -10,7 +10,7 @@ exports.create = async sale => {
     value,
     date: new Date(),
   });
-  await vehicleRepository.changeStatusToVENDIDO(sale.vehicleId);
+  await vehicleRepository.changeStatusToSold(sale.vehicleId);
   return;
 };
 

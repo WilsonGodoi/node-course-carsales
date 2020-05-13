@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { VehicleStatusEnum } = require('../enums/vehicle-status-enum');
 
 const VehicleSchema = new mongoose.Schema({
   brand: {
@@ -34,9 +35,9 @@ const VehicleSchema = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    enum: ['AVAILABLE', 'SOLD'],
+    enum: Object.values(VehicleStatusEnum),
     trim: true,
-    default: 'AVAILABLE',
+    default: VehicleStatusEnum.AVAILABLE,
   },
   price: {
     type: Number,
