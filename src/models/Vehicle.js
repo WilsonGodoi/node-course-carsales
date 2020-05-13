@@ -12,10 +12,6 @@ const VehicleSchema = new mongoose.Schema({
     trim: true,
     uppercase: true,
   },
-  active: {
-    type: Boolean,
-    default: false,
-  },
   modelYear: {
     type: String,
     required: true,
@@ -38,11 +34,11 @@ const VehicleSchema = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    enum: ['DISPONIVEL', 'RESERVADO', 'VENDIDO'],
+    enum: ['AVAILABLE', 'SOLD'],
     trim: true,
-    default: 'DISPONIVEL',
+    default: 'AVAILABLE',
   },
-  advertisedValue: {
+  price: {
     type: Number,
     required: true,
   },
