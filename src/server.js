@@ -7,6 +7,24 @@ const userController = require('./controllers/user-controller');
 
 const app = express();
 
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
+// Extended:
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: 'Car Sales API',
+      description: 'Car Sales Information',
+      servers: ['http://localhost:8080'],
+    },
+  },
+  apis: ['./src/routes/*.js'],
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 mongoose
   .connect(config.connectionUrlDatabase, {
     useCreateIndex: true,
