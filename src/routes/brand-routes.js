@@ -8,7 +8,7 @@ const routes = Router();
  * @swagger
  * /api/auth/admin/brands:
  *  get:
- *      description: Use to request all customers
+ *      description: Use to request all brands
  *      tags:
  *          - name: Brands
  *      responses:

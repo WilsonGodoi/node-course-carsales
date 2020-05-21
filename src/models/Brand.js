@@ -8,10 +8,6 @@ const BrandSchema = new mongoose.Schema({
     unique: true,
     uppercase: true,
   },
-  active: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 // Duplicate the ID field.

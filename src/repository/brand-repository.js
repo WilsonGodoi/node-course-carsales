@@ -1,7 +1,7 @@
 const Brand = require('../models/Brand');
 
 exports.getById = async id => {
-  return await Brand.findOne({ id: id });
+  return await Brand.findById(id);
 };
 
 exports.getByName = async name => {
@@ -13,24 +13,20 @@ exports.list = async () => {
 };
 
 exports.create = async data => {
-  const { name, active } = data;
+  const { name } = data;
   return await Brand.create({
     name,
-    active,
   });
 };
 
 exports.edit = async data => {
-  await Brand.findOneAndUpdate(
-    { id: data.id },
-    {
-      $set: {
-        name: data.name,
-        active: data.active,
-      },
-    }
-  );
-  return await this.getById(data.id);
+  const { id, name } = data;
+  await Brand.findByIdAndUpdate(id, {
+    $set: {
+      name,
+    },
+  });
+  return this.getById(id);
 };
 
 exports.delete = async brand => {
