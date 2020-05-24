@@ -38,7 +38,7 @@ module.exports = {
         name,
         id: req.params.id,
       });
-      return res.status(201).send(editedBrand);
+      return res.status(200).send(editedBrand);
     } catch (error) {
       return res.status(400).json(error);
     }
