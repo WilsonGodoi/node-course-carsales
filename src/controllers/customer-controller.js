@@ -8,13 +8,13 @@ module.exports = {
 
       const clientSearch = await customerRepository.getByEmail(email);
       if (clientSearch) {
-        return res.status(400).json('Cliente já cadastrado!');
+        return res.status(400).send('Cliente já cadastrado!');
       }
 
       const newCustomer = await customerRepository.create(customer);
       return res.status(201).send(newCustomer);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).send(error);
     }
   },
 
@@ -23,7 +23,7 @@ module.exports = {
       const customers = await customerRepository.list();
       return res.status(200).send(customers);
     } catch (error) {
-      return res.status(400).json('Não foi possível listar os clientes!');
+      return res.status(400).send(error);
     }
   },
 
@@ -33,7 +33,7 @@ module.exports = {
 
       const customerSearch = await customerRepository.getById(req.params.id);
       if (!customerSearch) {
-        return res.status(400).json('Cliente não cadastrado!');
+        return res.status(400).send('Cliente não cadastrado!');
       }
       await customerRepository.edit({
         name,
@@ -41,9 +41,9 @@ module.exports = {
         telephone,
         id: req.params.id,
       });
-      return res.status(200).send({ message: 'Cliente alterado com sucesso!' });
+      return res.status(200).send('Cliente alterado com sucesso!');
     } catch (error) {
-      return res.status(400).json('Não foi possível alterar o cliente!');
+      return res.status(400).send(error);
     }
   },
 };

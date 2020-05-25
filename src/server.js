@@ -48,7 +48,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(function (error, req, res, next) {
   if (error.message === 'request entity too large') {
-    return res.status(413).json('Requisição maior que 2MB');
+    return res.status(413).send('Requisição maior que 2MB');
   } else {
     next();
   }

@@ -32,7 +32,7 @@ module.exports = {
           },
         }
       );
-      res.status(201).json({ jwt });
+      res.status(201).send({ jwt });
     } catch (error) {
       return res.status(400).send(error);
     }
