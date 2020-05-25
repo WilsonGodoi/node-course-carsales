@@ -6,7 +6,7 @@ module.exports = {
       const brands = await brandRepository.list();
       return res.status(200).send(brands);
     } catch (error) {
-      return res.status(400).json('Não foi possível listar os marcas!');
+      return res.status(400).send(error);
     }
   },
 
@@ -14,15 +14,10 @@ module.exports = {
     try {
       const { name } = req.body;
 
-      const brandSearch = await brandRepository.getByName(name);
-      if (brandSearch) {
-        return res.status(400).json('Marca já cadastrada!');
-      }
-
       const newBrand = await brandRepository.create({ name });
       return res.status(201).send(newBrand);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).send(error);
     }
   },
 
@@ -32,7 +27,7 @@ module.exports = {
 
       const brandSearch = await brandRepository.getById(req.params.id);
       if (!brandSearch) {
-        return res.status(400).json('Marca não cadastrada!');
+        return res.status(400).send('Marca não cadastrada!');
       }
       const editedBrand = await brandRepository.edit({
         name,
@@ -40,7 +35,7 @@ module.exports = {
       });
       return res.status(200).send(editedBrand);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).send(error);
     }
   },
 
@@ -48,12 +43,12 @@ module.exports = {
     try {
       const brand = await brandRepository.getById(req.params.id);
       if (!brand) {
-        return res.status(400).json('Falha ao remover a marca!');
+        return res.status(400).send('Falha ao remover a marca!');
       }
       await brandRepository.delete(brand);
-      return res.status(200).send({ message: 'Marca removida' });
+      return res.status(200).send('Marca removida!');
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).send(error);
     }
   },
 };
