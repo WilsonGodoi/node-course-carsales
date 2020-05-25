@@ -18,6 +18,14 @@ const swaggerOptions = {
       description: 'Car Sales Information',
       servers: ['http://localhost:8080'],
     },
+    securityDefinitions: {
+      bearerAuth: {
+        type: 'apiKey',
+        name: 'Authorization',
+        scheme: 'bearer',
+        in: 'header',
+      },
+    },
   },
   apis: ['./src/routes/*.js'],
 };

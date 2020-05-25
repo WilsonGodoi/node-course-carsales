@@ -8,6 +8,8 @@ const routes = Router();
  * @swagger
  * /api/auth/admin/brands:
  *  get:
+ *      security:
+ *          - bearerAuth: []
  *      description: Use to list brands
  *      tags:
  *          - name: Brands
@@ -87,6 +89,8 @@ routes.put('/:id', authService.isAdmin, BrandController.edit);
  * @swagger
  * /api/auth/admin/brands/{id}:
  *  delete:
+ *      security:
+ *          - bearerAuth: []
  *      description: Use to delete a brand
  *      tags:
  *          - name: Brands
