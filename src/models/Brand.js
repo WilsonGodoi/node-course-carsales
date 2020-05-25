@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongooseHidden = require('mongoose-hidden');
 
 const BrandSchema = new mongoose.Schema({
   name: {
@@ -10,14 +11,12 @@ const BrandSchema = new mongoose.Schema({
   },
 });
 
-// Duplicate the ID field.
-BrandSchema.virtual('id').get(function () {
-  return this._id.toHexString();
-});
-
-// Ensure virtual fields are serialised.
+// This will add `id` in toJSON
 BrandSchema.set('toJSON', {
   virtuals: true,
 });
+
+// This will remove `_id` and `__v` from all queries
+BrandSchema.plugin(mongooseHidden());
 
 module.exports = mongoose.model('Brand', BrandSchema);

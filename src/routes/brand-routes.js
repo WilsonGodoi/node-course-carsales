@@ -35,6 +35,8 @@ routes.get('/', authService.authorize, BrandController.list);
  * @swagger
  * /api/auth/admin/brands:
  *  post:
+ *      security:
+ *          - bearerAuth: []
  *      description: Use to create a brand
  *      tags:
  *          - name: Brands
@@ -59,6 +61,8 @@ routes.post('/', authService.isAdmin, BrandController.create);
  * @swagger
  * /api/auth/admin/brands/{id}:
  *  put:
+ *      security:
+ *          - bearerAuth: []
  *      description: Use to update a brand
  *      tags:
  *          - name: Brands
