@@ -11,10 +11,10 @@ module.exports = {
         password: md5(req.body.password + config.privateKey),
       });
       if (!user) {
-        return res.status(404).send('Usuário ou senha inválidos!');
+        return res.status(404).json('Usuário ou senha inválidos!');
       }
       if (!user.active) {
-        return res.status(404).send('Usuário inativo!');
+        return res.status(404).json('Usuário inativo!');
       }
       const lastTimeLogin = Date.now();
       const jwt = await authService.generateToken({
@@ -32,9 +32,9 @@ module.exports = {
           },
         }
       );
-      res.status(201).send({ jwt });
+      res.status(201).json({ jwt });
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(400).json(error);
     }
   },
 };

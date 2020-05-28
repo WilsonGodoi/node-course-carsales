@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const config = require('./config');
 const userController = require('./controllers/user-controller');
@@ -43,12 +42,12 @@ mongoose
   .catch(error => console.error('Database connection error:', error));
 
 app.use(cors(config.corsOptions));
-app.use(bodyParser.json({ limit: '2mb' }));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json({ limit: '2mb' }));
+app.use(express.urlencoded({ extended: false }));
 
-app.use(function (error, req, res, next) {
+app.use((error, req, res, next) => {
   if (error.message === 'request entity too large') {
-    return res.status(413).send('Requisição maior que 2MB');
+    return res.status(413).json('Requisição maior que 2MB');
   } else {
     next();
   }

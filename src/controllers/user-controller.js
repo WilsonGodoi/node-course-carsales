@@ -33,13 +33,13 @@ module.exports = {
 
       const userSearch = await userRepository.getByLogin(login);
       if (userSearch) {
-        return res.status(400).send('Usuário já cadastrado!');
+        return res.status(400).json('Usuário já cadastrado!');
       }
 
       const newUser = await userRepository.create(user);
-      return res.status(201).send(newUser);
+      return res.status(201).json(newUser);
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(400).json(error);
     }
   },
 
@@ -56,27 +56,27 @@ module.exports = {
           },
         }
       );
-      return res.status(200).send('Avatar alterado com sucesso!');
+      return res.status(200).json('Avatar alterado com sucesso!');
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(400).json(error);
     }
   },
 
   async getCurrent(req, res) {
     try {
       const currentUser = await userRepository.getCurrent(req);
-      return res.status(200).send(currentUser);
+      return res.status(200).json(currentUser);
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(400).json(error);
     }
   },
 
   async list(req, res) {
     try {
       const users = await userRepository.list();
-      return res.status(200).send(users);
+      return res.status(200).json(users);
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(400).json(error);
     }
   },
 
@@ -95,9 +95,9 @@ module.exports = {
           },
         }
       );
-      return res.status(200).send('Usuário alterado com sucesso!');
+      return res.status(200).json('Usuário alterado com sucesso!');
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(400).json(error);
     }
   },
 
@@ -105,12 +105,12 @@ module.exports = {
     try {
       const user = await User.findOne({ id: req.params.id });
       if (!user) {
-        return res.status(400).send('Falha ao remover usuário!');
+        return res.status(400).json('Falha ao remover usuário!');
       }
       await User.deleteOne({ id: user.id });
-      return res.status(200).send('Usuário removido');
+      return res.status(200).json('Usuário removido');
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(400).json(error);
     }
   },
 
@@ -119,20 +119,20 @@ module.exports = {
       const { currentPassword, newPassword, confirmPassword } = req.body;
       const user = await userRepository.getCurrent(req);
       if (!user) {
-        return res.status(400).send('Usuário não encontrado!');
+        return res.status(400).json('Usuário não encontrado!');
       }
       if (newPassword != confirmPassword) {
         return res
           .status(400)
-          .send('A nova senha e confirmação devem ser iguais!');
+          .json('A nova senha e confirmação devem ser iguais!');
       }
       if (!userRepository.passwordMatches(req, currentPassword)) {
-        return res.status(400).send('Senha atual inválida!');
+        return res.status(400).json('Senha atual inválida!');
       }
       await userRepository.updateOwnPassword(req, newPassword);
-      return res.status(200).send('Senha alterada com sucesso!');
+      return res.status(200).json('Senha alterada com sucesso!');
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(400).json(error);
     }
   },
 };

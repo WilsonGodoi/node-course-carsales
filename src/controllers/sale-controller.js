@@ -10,18 +10,18 @@ module.exports = {
       const sale = { customerId, sellerId, vehicleId, value };
 
       const newSale = await saleRepository.create(sale);
-      return res.status(201).send(newSale);
+      return res.status(201).json(newSale);
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(400).json(error);
     }
   },
 
   async list(req, res) {
     try {
       const sales = await saleRepository.list();
-      return res.status(200).send(sales);
+      return res.status(200).json(sales);
     } catch (error) {
-      return res.status(400).send(error);
+      return res.status(400).json(error);
     }
   },
 };
