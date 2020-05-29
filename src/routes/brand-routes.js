@@ -89,29 +89,4 @@ routes.post('/', authService.isAdmin, BrandController.create);
  */
 routes.put('/:id', authService.isAdmin, BrandController.edit);
 
-/**
- * @swagger
- * /api/auth/admin/brands/{id}:
- *  delete:
- *      security:
- *          - bearerAuth: []
- *      description: Use to delete a brand
- *      tags:
- *          - name: Brands
- *      parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *          type: string
- *         description: The brand ID to delete
- *      responses:
- *          '200':
- *              description: A succesful response
- *              examples:
- *                    application/json:
- *                        { message: 'Marca removida' }
- */
-routes.delete('/:id', authService.isAdmin, BrandController.delete);
-
 module.exports = app => app.use('/api/auth/admin/brands', routes);

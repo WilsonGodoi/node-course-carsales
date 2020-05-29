@@ -28,7 +28,3 @@ exports.edit = async data => {
   });
   return this.getById(id);
 };
-
-exports.delete = async brand => {
-  return await Brand.deleteOne(brand);
-};

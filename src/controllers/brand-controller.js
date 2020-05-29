@@ -38,17 +38,4 @@ module.exports = {
       return res.status(400).json(error);
     }
   },
-
-  async delete(req, res) {
-    try {
-      const brand = await brandRepository.getById(req.params.id);
-      if (!brand) {
-        return res.status(400).json('Falha ao remover a marca!');
-      }
-      await brandRepository.delete(brand);
-      return res.status(200).json('Marca removida!');
-    } catch (error) {
-      return res.status(400).json(error);
-    }
-  },
 };
