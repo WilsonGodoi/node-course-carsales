@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const mongooseHidden = require('mongoose-hidden')({
+  hidden: { _id: true, __v: true },
+});
 
 const CustomerSchema = new mongoose.Schema({
   name: {
@@ -29,5 +32,7 @@ CustomerSchema.virtual('id').get(function () {
 CustomerSchema.set('toJSON', {
   virtuals: true,
 });
+
+CustomerSchema.plugin(mongooseHidden);
 
 module.exports = mongoose.model('Customer', CustomerSchema);

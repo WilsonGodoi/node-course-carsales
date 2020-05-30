@@ -45,14 +45,20 @@ routes.get('/customers', authService.authorize, CustomerController.list);
  *      tags:
  *          - name: Customers
  *      parameters:
- *       - in: body
- *         properties:
- *          name:
- *              type: string
- *          email:
- *              type: string
- *          telephone:
- *              type: string
+ *          - in: body
+ *            name: customer
+ *            description: The customer to update.
+ *            schema:
+ *              type: object
+ *              required:
+ *                - userName
+ *              properties:
+ *                name:
+ *                  type: string
+ *                email:
+ *                  type: string
+ *                telephone:
+ *                  type: string
  *      responses:
  *          '201':
  *              description: A succesful response
@@ -71,6 +77,8 @@ routes.post('/customers', authService.authorize, CustomerController.create);
  * @swagger
  * /api/auth/customers/{id}:
  *   put:
+ *     security:
+ *          - bearerAuth: []
  *     summary: Use to update a customer.
  *     tags:
  *       - name: Customers
