@@ -66,15 +66,48 @@ routes.get('/', authService.isAdmin, UserController.list);
  *              enum:
  *                - SELLER
  *                - ADMINISTRATOR
+ *            active:
+ *              type: boolean
  *      responses:
  *          '201':
  *              description: A succesful response
  */
 routes.post('/', authService.isAdmin, UserController.create);
 
+/**
+ * @swagger
+ * /api/auth/users/{id}:
+ *  put:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: Use to update a user, only administrators can access.
+ *      tags:
+ *          - name: Users
+ *      parameters:
+ *      - in: body
+ *        name: user
+ *        description: The user to update.
+ *        schema:
+ *          type: object
+ *          properties:
+ *            name:
+ *              type: string
+ *            login:
+ *              type: string
+ *            password:
+ *              type: string
+ *            type:
+ *              type: string
+ *              enum:
+ *                - SELLER
+ *                - ADMINISTRATOR
+ *            active:
+ *              type: boolean
+ *      responses:
+ *          '200':
+ *              description: A succesful response
+ */
 routes.put('/:id', authService.isAdmin, UserController.edit);
-
-routes.delete('/:id', authService.isAdmin, UserController.delete);
 
 /**
  * @swagger
@@ -101,8 +134,56 @@ routes.delete('/:id', authService.isAdmin, UserController.delete);
  */
 routes.get('/current', authService.authorize, UserController.getCurrent);
 
+/**
+ * @swagger
+ * /api/auth/users/avatar:
+ *  post:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: Use to save a user's avatar.
+ *      tags:
+ *          - name: Users
+ *      parameters:
+ *      - in: body
+ *        name: user
+ *        description: The avatar to save.
+ *        schema:
+ *          type: object
+ *          properties:
+ *            imageBase64:
+ *              type: string
+ *      responses:
+ *          '201':
+ *              description: A succesful response
+ */
 routes.post('/avatar', authService.authorize, UserController.saveAvatar);
 
+/**
+ * @swagger
+ * /api/auth/users/current/password:
+ *  put:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: Use to update a user's password.
+ *      tags:
+ *          - name: Users
+ *      parameters:
+ *      - in: body
+ *        name: user
+ *        description: The user's password to update.
+ *        schema:
+ *          type: object
+ *          properties:
+ *            currentPassword:
+ *              type: string
+ *            newPassword:
+ *              type: string
+ *            confirmPassword:
+ *              type: string
+ *      responses:
+ *          '200':
+ *              description: A succesful response
+ */
 routes.put(
   '/current/password',
   authService.authorize,

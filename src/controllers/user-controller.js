@@ -51,7 +51,7 @@ module.exports = {
 
       await userRepository.saveAvatar(currentUser.id, imageBase64);
 
-      return res.status(200).json('Avatar alterado com sucesso!');
+      return res.status(201).json('Avatar alterado com sucesso!');
     } catch (error) {
       return res.status(400).json(error);
     }
@@ -79,19 +79,6 @@ module.exports = {
     try {
       await userRepository.update(req.params.id, req.body);
       return res.status(200).json('Usuário alterado com sucesso!');
-    } catch (error) {
-      return res.status(400).json(error);
-    }
-  },
-
-  async delete(req, res) {
-    try {
-      const user = await User.findById(req.params.id);
-      if (!user) {
-        return res.status(400).json('Falha ao remover usuário!');
-      }
-      await User.deleteOne({ id: user.id });
-      return res.status(200).json('Usuário removido');
     } catch (error) {
       return res.status(400).json(error);
     }
