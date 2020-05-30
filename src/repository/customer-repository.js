@@ -22,15 +22,12 @@ exports.create = async customer => {
 };
 
 exports.edit = async data => {
-  await Customer.findOneAndUpdate(
-    { _id: data.id },
-    {
-      $set: {
-        name: data.name,
-        email: data.email,
-        telephone: data.telephone,
-      },
-    }
-  );
+  await Customer.findByIdAndUpdate(data.id, {
+    $set: {
+      name: data.name,
+      email: data.email,
+      telephone: data.telephone,
+    },
+  });
   return await this.getById(data.id);
 };

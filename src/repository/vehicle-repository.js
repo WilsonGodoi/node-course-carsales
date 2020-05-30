@@ -9,14 +9,11 @@ exports.list = async () => {
 };
 
 exports.changeStatusToSold = async _id => {
-  return await Vehicle.findOneAndUpdate(
-    { _id },
-    {
-      $set: {
-        status: VehicleStatuses.SOLD,
-      },
-    }
-  );
+  return await Vehicle.findByIdAndUpdate(_id, {
+    $set: {
+      status: VehicleStatuses.SOLD,
+    },
+  });
 };
 
 exports.listPictures = async vehicleId => {
@@ -31,23 +28,17 @@ exports.create = async vehicle => {
 exports.savePicture = async (vehicleId, picture) => {
   const { pictures } = await Vehicle.findOne({ _id: vehicleId });
   pictures.push(picture);
-  return await Vehicle.findOneAndUpdate(
-    { _id: vehicleId },
-    {
-      $set: {
-        pictures,
-      },
-    }
-  );
+  return await Vehicle.findByIdAndUpdate(vehicleId, {
+    $set: {
+      pictures,
+    },
+  });
 };
 
 exports.deletePicture = async (vehicleId, pictureId) => {
-  return await Vehicle.findOneAndUpdate(
-    { _id: vehicleId },
-    {
-      $pull: {
-        pictures: { _id: pictureId },
-      },
-    }
-  );
+  return await Vehicle.findByIdAndUpdate(vehicleId, {
+    $pull: {
+      pictures: { _id: pictureId },
+    },
+  });
 };

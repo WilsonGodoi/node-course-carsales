@@ -76,3 +76,11 @@ exports.update = async (id, user) => {
     },
   });
 };
+
+exports.saveAvatar = async (id, imageBase64) => {
+  return await User.findByIdAndUpdate(id, {
+    $set: {
+      imageBase64,
+    },
+  });
+};

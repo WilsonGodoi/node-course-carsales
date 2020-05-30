@@ -49,14 +49,8 @@ module.exports = {
       const { imageBase64 } = req.body;
       const currentUser = await userRepository.getCurrent(req);
 
-      await User.findOneAndUpdate(
-        { _id: currentUser.id },
-        {
-          $set: {
-            imageBase64,
-          },
-        }
-      );
+      await userRepository.saveAvatar(currentUser.id, imageBase64);
+
       return res.status(200).json('Avatar alterado com sucesso!');
     } catch (error) {
       return res.status(400).json(error);
