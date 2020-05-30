@@ -6,30 +6,9 @@ const userController = require('./controllers/user-controller');
 
 const app = express();
 
-const swaggerJsDoc = require('swagger-jsdoc');
+// Swagger setup
 const swaggerUi = require('swagger-ui-express');
-
-// Extended:
-const swaggerOptions = {
-  swaggerDefinition: {
-    info: {
-      title: 'Car Sales API',
-      description: 'Car Sales Information',
-      servers: ['http://localhost:8080'],
-    },
-    securityDefinitions: {
-      bearerAuth: {
-        type: 'apiKey',
-        name: 'Authorization',
-        scheme: 'bearer',
-        in: 'header',
-      },
-    },
-  },
-  apis: ['./src/routes/*.js'],
-};
-
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
+const swaggerDocs = require('./swagger-docs');
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 mongoose
