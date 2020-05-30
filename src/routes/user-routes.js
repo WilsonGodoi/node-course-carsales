@@ -4,29 +4,55 @@ const UserController = require('../controllers/user-controller');
 
 const routes = Router();
 
-routes.get('/admin/users', authService.authorize, UserController.list);
-routes.get(
-  '/admin/users/current',
-  authService.authorize,
-  UserController.getCurrent
-);
+/**
+ * @swagger
+ * /api/auth/users:
+ *  get:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: Use to list users, only administrators can access.
+ *      tags:
+ *          - name: Users
+ *      responses:
+ *          '200':
+ *              description: A succesful response
+ *              examples:
+ *                    application/json:
+ *                      [
+ *                        {
+ *                          id: string,
+ *                          login: string,
+ *                          name: string,
+ *                          type: string,
+ *                          active: boolean,
+ *                          imageBase64: string
+ *                        },
+ *                        {
+ *                          id: string,
+ *                          login: string,
+ *                          name: string,
+ *                          type: string,
+ *                          active: boolean,
+ *                          imageBase64: string
+ *                        }
+ *                      ]
+ */
+routes.get('/', authService.isAdmin, UserController.list);
 
-routes.post('/admin/users', authService.isAdmin, UserController.create);
+routes.get('/current', authService.authorize, UserController.getCurrent);
 
-routes.post(
-  '/admin/users/avatar',
-  authService.authorize,
-  UserController.saveAvatar
-);
+routes.post('/', authService.isAdmin, UserController.create);
 
-routes.put('/admin/users/:id', authService.isAdmin, UserController.edit);
+routes.post('/avatar', authService.authorize, UserController.saveAvatar);
+
+routes.put('/:id', authService.isAdmin, UserController.edit);
 
 routes.put(
-  '/users/current/password',
+  '/current/password',
   authService.authorize,
   UserController.changePassword
 );
 
-routes.delete('/admin/users/:id', authService.isAdmin, UserController.delete);
+routes.delete('/:id', authService.isAdmin, UserController.delete);
 
-module.exports = app => app.use('/api/auth', routes);
+module.exports = app => app.use('/api/auth/users', routes);

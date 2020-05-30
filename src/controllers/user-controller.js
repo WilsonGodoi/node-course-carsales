@@ -82,19 +82,7 @@ module.exports = {
 
   async edit(req, res) {
     try {
-      const { login, name, password, type, active } = req.body;
-      await User.findOneAndUpdate(
-        { id: req.params.id },
-        {
-          $set: {
-            login,
-            name,
-            password: md5(password + config.privateKey),
-            type,
-            active,
-          },
-        }
-      );
+      await userRepository.update(req.params.id, req.body);
       return res.status(200).json('Usuário alterado com sucesso!');
     } catch (error) {
       return res.status(400).json(error);

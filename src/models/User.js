@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const mongooseHidden = require('mongoose-hidden')({
+  hidden: { _id: true, __v: true },
+});
 
 const UserSchema = new mongoose.Schema({
   login: {
@@ -53,5 +56,7 @@ UserSchema.virtual('id').get(function () {
 UserSchema.set('toJSON', {
   virtuals: true,
 });
+
+UserSchema.plugin(mongooseHidden);
 
 module.exports = mongoose.model('User', UserSchema);

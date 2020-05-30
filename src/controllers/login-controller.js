@@ -14,7 +14,9 @@ module.exports = {
         return res.status(404).json('Usuário ou senha inválidos!');
       }
       if (!user.active) {
-        return res.status(404).json('Usuário inativo!');
+        return res
+          .status(404)
+          .json('Usuário inativo, entre em contato com um administrador!');
       }
       const lastTimeLogin = Date.now();
       const jwt = await authService.generateToken({

@@ -49,7 +49,7 @@ exports.updateOwnPassword = async (req, newPassword) => {
 };
 
 exports.list = async () => {
-  return await User.find({}, 'id login name type active image');
+  return await User.find({}, 'id login name type active imageBase64');
 };
 
 exports.create = async user => {
@@ -61,5 +61,18 @@ exports.create = async user => {
     type,
     active,
     roles: [type],
+  });
+};
+
+exports.update = async (id, user) => {
+  const { login, name, password, type, active } = user;
+  return await User.findByIdAndUpdate(id, {
+    $set: {
+      login,
+      name,
+      password: md5(password + config.privateKey),
+      type,
+      active,
+    },
   });
 };

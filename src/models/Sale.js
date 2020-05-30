@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const mongooseHidden = require('mongoose-hidden')({
+  hidden: { _id: true, __v: true },
+});
 
 const SaleSchema = new mongoose.Schema({
   customer: {
@@ -36,10 +39,6 @@ SaleSchema.set('toJSON', {
   virtuals: true,
 });
 
-// // Getter value
-// SaleSchema.path('value').get(num => (num / 100).toFixed(2));
-//
-// // Setter value
-// SaleSchema.path('value').set(num => num.toFixed(2));
+SaleSchema.plugin(mongooseHidden);
 
 module.exports = mongoose.model('Sale', SaleSchema);

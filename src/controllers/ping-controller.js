@@ -1,5 +1,5 @@
 module.exports = {
-  async publicPing(req, res) {
-    res.status(200).json('Public Pong!');
+  async ping(req, res) {
+    res.status(200).json('Car Sales Pong!');
   },
 };
