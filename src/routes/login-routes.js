@@ -6,27 +6,31 @@ const routes = Router();
 /**
  * @swagger
  * /api/login:
- *  post:
- *      summary: Use to do a login.
- *      tags:
- *          - name: Login
- *      parameters:
- *       - in: body
- *         properties:
- *          login:
+ *   post:
+ *     summary: Use to do a login.
+ *     tags:
+ *       - name: Login
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *      - in: body
+ *        name: user
+ *        description: The user to login.
+ *        schema:
+ *          type: object
+ *          properties:
+ *            login:
  *              type: string
- *          password:
+ *            password:
  *              type: string
- *         value:
- *          login: teste
- *      responses:
- *          '201':
- *              description: A succesful response
- *              examples:
- *                    application/json:
- *                        {
- *                          jwt: string,
- *                        }
+ *     responses:
+ *       201:
+ *         description: Logged
+ *         examples:
+ *              application/json:
+ *                  {
+ *                    jwt: string,
+ *                  }
  */
 routes.post('/', LoginController.doLogin);
 
