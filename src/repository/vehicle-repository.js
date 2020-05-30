@@ -4,8 +4,8 @@ const { VehicleStatuses } = require('../enums/vehicle-statuses');
 exports.list = async () => {
   return await Vehicle.find(
     { status: VehicleStatuses.AVAILABLE },
-    '-__v -pictures'
-  ).populate('brand', '-__v');
+    '-pictures'
+  ).populate('brand');
 };
 
 exports.changeStatusToSold = async id => {

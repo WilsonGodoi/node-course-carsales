@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const mongooseHidden = require('mongoose-hidden')({
+  hidden: { _id: true, __v: true },
+});
 const { VehicleStatuses } = require('../enums/vehicle-statuses');
 
 const VehicleSchema = new mongoose.Schema({
@@ -55,5 +58,7 @@ VehicleSchema.virtual('id').get(function () {
 VehicleSchema.set('toJSON', {
   virtuals: true,
 });
+
+VehicleSchema.plugin(mongooseHidden);
 
 module.exports = mongoose.model('Vehicle', VehicleSchema);
