@@ -21,7 +21,7 @@ const routes = Router();
  *                      [
  *                        {
  *                          id: string,
- *                          brand: { id: string, name: string},
+ *                          brand: { id: string, name: string },
  *                          model: string,
  *                          modelYear: string,
  *                          manufactureYear: string,
@@ -35,6 +35,26 @@ const routes = Router();
  */
 routes.get('/', authService.authorize, VehicleController.list);
 
+/**
+ * @swagger
+ * /api/auth/vehicles/{id}/pictures:
+ *  get:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: Use to list vehicle's pictures.
+ *      tags:
+ *          - name: Vehicles
+ *      responses:
+ *          '200':
+ *              description: A succesful response
+ *              examples:
+ *                    application/json:
+ *                      [
+ *                        {
+ *                          pictures: { base64: string },
+ *                        }
+ *                      ]
+ */
 routes.get(
   '/:id/pictures',
   authService.authorize,
