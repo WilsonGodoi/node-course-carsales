@@ -8,8 +8,8 @@ exports.list = async () => {
   ).populate('brand', '-__v');
 };
 
-exports.changeStatusToSold = async _id => {
-  return await Vehicle.findByIdAndUpdate(_id, {
+exports.changeStatusToSold = async id => {
+  return await Vehicle.findByIdAndUpdate(id, {
     $set: {
       status: VehicleStatuses.SOLD,
     },
@@ -17,7 +17,7 @@ exports.changeStatusToSold = async _id => {
 };
 
 exports.listPictures = async vehicleId => {
-  const { pictures } = await Vehicle.findOne({ _id: vehicleId });
+  const { pictures } = await Vehicle.findById(vehicleId);
   return pictures;
 };
 
@@ -26,7 +26,7 @@ exports.create = async vehicle => {
 };
 
 exports.savePicture = async (vehicleId, picture) => {
-  const { pictures } = await Vehicle.findOne({ _id: vehicleId });
+  const { pictures } = await Vehicle.findById(vehicleId);
   pictures.push(picture);
   return await Vehicle.findByIdAndUpdate(vehicleId, {
     $set: {

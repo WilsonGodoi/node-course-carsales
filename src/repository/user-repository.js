@@ -18,14 +18,11 @@ getCurrentPrivate = async req => {
 };
 
 exports.invalidSession = async req => {
-  await User.findByIdAndUpdate(
-    { _id: req.userId },
-    {
-      $set: {
-        lastTimeLogin: undefined,
-      },
-    }
-  );
+  await User.findByIdAndUpdate(req.userId, {
+    $set: {
+      lastTimeLogin: undefined,
+    },
+  });
 };
 
 exports.passwordMatches = async (req, password) => {
@@ -38,14 +35,11 @@ exports.updateOwnPassword = async (req, newPassword) => {
   if (md5(newPassword + config.privateKey) == currentUser.password) {
     throw new Error('A nova senha deve ser diferente da senha atual!');
   }
-  await User.findByIdAndUpdate(
-    { _id: req.userId },
-    {
-      $set: {
-        password: md5(password + config.privateKey),
-      },
-    }
-  );
+  await User.findByIdAndUpdate(req.userId, {
+    $set: {
+      password: md5(password + config.privateKey),
+    },
+  });
 };
 
 exports.list = async () => {

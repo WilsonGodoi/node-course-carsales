@@ -86,7 +86,7 @@ module.exports = {
 
   async delete(req, res) {
     try {
-      const user = await User.findOne({ id: req.params.id });
+      const user = await User.findById(req.params.id);
       if (!user) {
         return res.status(400).json('Falha ao remover usuário!');
       }

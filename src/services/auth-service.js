@@ -26,7 +26,7 @@ exports.authorize = (req, res, next) => {
           if (error) {
             return res.status(403).json('Token inválido!');
           } else {
-            const user = await User.findById({ _id: decoded._id });
+            const user = await User.findById(decoded._id);
             if (user && decoded.lastTimeLogin != user.lastTimeLogin) {
               return res
                 .status(401)
@@ -59,7 +59,7 @@ exports.isAdmin = (req, res, next) => {
             return res.status(403).json('Token inválido!');
           } else {
             if (decoded.roles.includes(UserTypes.ADMINISTRATOR)) {
-              const user = await User.findById({ _id: decoded._id });
+              const user = await User.findById(decoded._id);
               if (user && decoded.lastTimeLogin != user.lastTimeLogin) {
                 return res
                   .status(401)

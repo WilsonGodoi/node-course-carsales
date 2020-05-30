@@ -1,11 +1,11 @@
 const Customer = require('../models/Customer');
 
 exports.getById = async id => {
-  return await Customer.findOne({ _id: id });
+  return await Customer.findById(id);
 };
 
 exports.getByEmail = async email => {
-  return await Customer.findOne({ email });
+  return await Customer.find({ email });
 };
 
 exports.list = async () => {
