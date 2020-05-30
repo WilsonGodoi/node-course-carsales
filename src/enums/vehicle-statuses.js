@@ -1,4 +1,4 @@
-exports.VehicleStatusEnum = {
+exports.VehicleStatuses = {
   AVAILABLE: 'AVAILABLE',
   SOLD: 'SOLD',
 };

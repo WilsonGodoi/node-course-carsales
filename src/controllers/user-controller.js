@@ -2,6 +2,7 @@ const md5 = require('md5');
 const config = require('../config');
 const User = require('../models/User');
 const userRepository = require('../repository/user-repository');
+const { UserTypes } = require('../enums/user-types');
 
 module.exports = {
   async createAdmin() {
@@ -10,9 +11,9 @@ module.exports = {
         login: 'admin',
         name: 'admin',
         password: 'admin',
-        type: 'ADMINISTRADOR',
+        type: UserTypes.ADMINISTRATOR,
         active: true,
-        roles: ['ADMINISTRADOR'],
+        roles: [UserTypes.ADMINISTRATOR],
       };
 
       if (await userRepository.getByLogin(user.login)) {

@@ -2,6 +2,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const User = require('../models/User');
+const { UserTypes } = require('../enums/user-types');
 
 exports.generateToken = async data => {
   return jwt.sign(data, config.privateKey, { expiresIn: '1d' });
@@ -57,7 +58,7 @@ exports.isAdmin = (req, res, next) => {
           if (error) {
             return res.status(403).json('Token inválido!');
           } else {
-            if (decoded.roles.includes('ADMINISTRADOR')) {
+            if (decoded.roles.includes(UserTypes.ADMINISTRATOR)) {
               const user = await User.findById({ _id: decoded._id });
               if (user && decoded.lastTimeLogin != user.lastTimeLogin) {
                 return res

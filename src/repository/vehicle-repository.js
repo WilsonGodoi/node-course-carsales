@@ -1,9 +1,9 @@
 const Vehicle = require('../models/Vehicle');
-const { VehicleStatusEnum } = require('../enums/vehicle-status-enum');
+const { VehicleStatuses } = require('../enums/vehicle-statuses');
 
 exports.list = async () => {
   return await Vehicle.find(
-    { status: VehicleStatusEnum.AVAILABLE },
+    { status: VehicleStatuses.AVAILABLE },
     '-__v -pictures'
   ).populate('brand', '-__v');
 };
@@ -13,7 +13,7 @@ exports.changeStatusToSold = async _id => {
     { _id },
     {
       $set: {
-        status: VehicleStatusEnum.SOLD,
+        status: VehicleStatuses.SOLD,
       },
     }
   );

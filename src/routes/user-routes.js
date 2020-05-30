@@ -39,6 +39,37 @@ const routes = Router();
  */
 routes.get('/', authService.isAdmin, UserController.list);
 
+/**
+ * @swagger
+ * /api/auth/users:
+ *  post:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: Use to create a user, only administrators can access.
+ *      tags:
+ *          - name: Users
+ *      parameters:
+ *      - in: body
+ *        name: user
+ *        description: The user to create.
+ *        schema:
+ *          type: object
+ *          properties:
+ *            name:
+ *              type: string
+ *            login:
+ *              type: string
+ *            password:
+ *              type: string
+ *            type:
+ *              type: string
+ *              enum:
+ *                - SELLER
+ *                - ADMINISTRATOR
+ *      responses:
+ *          '201':
+ *              description: A succesful response
+ */
 routes.post('/', authService.isAdmin, UserController.create);
 
 routes.put('/:id', authService.isAdmin, UserController.edit);

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const mongooseHidden = require('mongoose-hidden')({
   hidden: { _id: true, __v: true },
 });
+const { UserTypes } = require('../enums/user-types');
 
 const UserSchema = new mongoose.Schema({
   login: {
@@ -24,7 +25,7 @@ const UserSchema = new mongoose.Schema({
   type: {
     type: String,
     required: true,
-    enum: ['ADMINISTRADOR', 'VENDEDOR'],
+    enum: [UserTypes.ADMINISTRATOR, UserTypes.SELLER],
     trim: true,
   },
   active: {
@@ -35,8 +36,8 @@ const UserSchema = new mongoose.Schema({
     {
       type: String,
       require: true,
-      enum: ['ADMINISTRADOR', 'VENDEDOR'],
-      default: 'VENDEDOR',
+      enum: [UserTypes.ADMINISTRATOR, UserTypes.SELLER],
+      default: UserTypes.SELLER,
     },
   ],
   lastTimeLogin: {
