@@ -6,11 +6,11 @@ const routes = Router();
 
 /**
  * @swagger
- * /api/auth/admin/brands:
+ * /api/auth/brands:
  *  get:
  *      security:
  *          - bearerAuth: []
- *      description: Use to list brands
+ *      summary: Use to list brands.
  *      tags:
  *          - name: Brands
  *      responses:
@@ -33,11 +33,11 @@ routes.get('/', authService.authorize, BrandController.list);
 
 /**
  * @swagger
- * /api/auth/admin/brands:
+ * /api/auth/brands:
  *  post:
  *      security:
  *          - bearerAuth: []
- *      description: Use to create a brand
+ *      summary: Use to create a brand, only administrators can access.
  *      tags:
  *          - name: Brands
  *      parameters:
@@ -59,11 +59,11 @@ routes.post('/', authService.isAdmin, BrandController.create);
 
 /**
  * @swagger
- * /api/auth/admin/brands/{id}:
+ * /api/auth/brands/{id}:
  *  put:
  *      security:
  *          - bearerAuth: []
- *      description: Use to update a brand
+ *      summary: Use to update a brand, only administrators can access.
  *      tags:
  *          - name: Brands
  *      parameters:
@@ -89,4 +89,4 @@ routes.post('/', authService.isAdmin, BrandController.create);
  */
 routes.put('/:id', authService.isAdmin, BrandController.edit);
 
-module.exports = app => app.use('/api/auth/admin/brands', routes);
+module.exports = app => app.use('/api/auth/brands', routes);
