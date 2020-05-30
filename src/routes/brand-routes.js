@@ -41,9 +41,13 @@ routes.get('/', authService.authorize, BrandController.list);
  *      tags:
  *          - name: Brands
  *      parameters:
- *       - in: body
- *         properties:
- *          name:
+ *      - in: body
+ *        name: user
+ *        description: The brand to create.
+ *        schema:
+ *          type: object
+ *          properties:
+ *            name:
  *              type: string
  *      responses:
  *          '201':
@@ -74,9 +78,13 @@ routes.post('/', authService.isAdmin, BrandController.create);
  *          type: string
  *         description: The brand ID to update
  *       - in: body
- *         properties:
- *          name:
- *              type: string
+ *         name: user
+ *         description: The brand to update.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             name:
+ *               type: string
  *      responses:
  *          '200':
  *              description: A succesful response
