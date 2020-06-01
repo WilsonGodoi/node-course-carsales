@@ -59,6 +59,45 @@ routes.get(
   VehicleController.listPictures
 );
 
+/**
+ * @swagger
+ * /api/auth/vehicles:
+ *  post:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: Use to create a vehicle, only administrators can access.
+ *      tags:
+ *          - name: Vehicles
+ *      parameters:
+ *      - in: body
+ *        name: user
+ *        description: The vehicle to create.
+ *        schema:
+ *          type: object
+ *          properties:
+ *            model:
+ *              type: string
+ *            modelYear:
+ *              type: string
+ *            manufactureYear:
+ *              type: string
+ *            color:
+ *              type: string
+ *            mileage:
+ *              type: string
+ *            onlyOwner:
+ *              type: boolean
+ *            status:
+ *              type: string
+ *              enum:
+ *                - AVAILABLE
+ *                - SOLD
+ *            price:
+ *              type: number
+ *      responses:
+ *          '201':
+ *              description: A succesful response
+ */
 routes.post('/', authService.isAdmin, VehicleController.create);
 
 routes.post(
