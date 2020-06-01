@@ -20,8 +20,8 @@ const routes = Router();
  *                    application/json:
  *                      [
  *                        {
- *                          id: string,
- *                          brand: { id: string, name: string },
+ *                          _id: string,
+ *                          brand: { _id: string, name: string },
  *                          model: string,
  *                          modelYear: string,
  *                          manufactureYear: string,
@@ -50,9 +50,7 @@ routes.get('/', authService.authorize, VehicleController.list);
  *              examples:
  *                    application/json:
  *                      [
- *                        {
- *                          pictures: { base64: string },
- *                        }
+ *                        { _id: string, base64: string }
  *                      ]
  */
 routes.get(

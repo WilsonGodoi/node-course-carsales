@@ -9,7 +9,7 @@ const app = express();
 // Swagger setup
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./swagger-docs');
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 mongoose
   .connect(config.connectionUrlDatabase, {

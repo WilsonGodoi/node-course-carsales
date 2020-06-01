@@ -8,6 +8,10 @@ exports.list = async () => {
   ).populate('brand');
 };
 
+exports.get = async id => {
+  return await Vehicle.findById(id);
+};
+
 exports.changeStatusToSold = async id => {
   return await Vehicle.findByIdAndUpdate(id, {
     $set: {
