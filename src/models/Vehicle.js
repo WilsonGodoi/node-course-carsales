@@ -1,7 +1,4 @@
 const mongoose = require('mongoose');
-const mongooseHidden = require('mongoose-hidden')({
-  hidden: { _id: true, __v: true },
-});
 const { VehicleStatuses } = require('../enums/vehicle-statuses');
 
 const VehicleSchema = new mongoose.Schema({
@@ -48,17 +45,5 @@ const VehicleSchema = new mongoose.Schema({
   },
   pictures: [{ base64: { type: String } }],
 });
-
-// Duplicate the ID field.
-VehicleSchema.virtual('id').get(function () {
-  return this._id.toHexString();
-});
-
-// Ensure virtual fields are serialised.
-VehicleSchema.set('toJSON', {
-  virtuals: true,
-});
-
-VehicleSchema.plugin(mongooseHidden);
 
 module.exports = mongoose.model('Vehicle', VehicleSchema);

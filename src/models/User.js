@@ -1,7 +1,4 @@
 const mongoose = require('mongoose');
-const mongooseHidden = require('mongoose-hidden')({
-  hidden: { _id: true, __v: true },
-});
 const { UserTypes } = require('../enums/user-types');
 
 const UserSchema = new mongoose.Schema({
@@ -47,17 +44,5 @@ const UserSchema = new mongoose.Schema({
     type: String,
   },
 });
-
-// Duplicate the ID field.
-UserSchema.virtual('id').get(function () {
-  return this._id.toHexString();
-});
-
-// Ensure virtual fields are serialised.
-UserSchema.set('toJSON', {
-  virtuals: true,
-});
-
-UserSchema.plugin(mongooseHidden);
 
 module.exports = mongoose.model('User', UserSchema);

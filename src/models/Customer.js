@@ -1,7 +1,4 @@
 const mongoose = require('mongoose');
-const mongooseHidden = require('mongoose-hidden')({
-  hidden: { _id: true, __v: true },
-});
 
 const CustomerSchema = new mongoose.Schema({
   name: {
@@ -22,17 +19,5 @@ const CustomerSchema = new mongoose.Schema({
     trim: true,
   },
 });
-
-// Duplicate the ID field.
-CustomerSchema.virtual('id').get(function () {
-  return this._id.toHexString();
-});
-
-// Ensure virtual fields are serialised.
-CustomerSchema.set('toJSON', {
-  virtuals: true,
-});
-
-CustomerSchema.plugin(mongooseHidden);
 
 module.exports = mongoose.model('Customer', CustomerSchema);

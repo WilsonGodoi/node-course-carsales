@@ -26,18 +26,18 @@ exports.invalidSession = async req => {
 };
 
 exports.passwordMatches = async (req, password) => {
-  const currentUser = await this.getCurrentPrivate(req);
+  const currentUser = await getCurrentPrivate(req);
   return md5(password + config.privateKey) == currentUser.password;
 };
 
 exports.updateOwnPassword = async (req, newPassword) => {
-  const currentUser = await this.getCurrentPrivate(req);
+  const currentUser = await getCurrentPrivate(req);
   if (md5(newPassword + config.privateKey) == currentUser.password) {
     throw new Error('A nova senha deve ser diferente da senha atual!');
   }
   await User.findByIdAndUpdate(req.userId, {
     $set: {
-      password: md5(password + config.privateKey),
+      password: md5(newPassword + config.privateKey),
     },
   });
 };

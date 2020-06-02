@@ -1,7 +1,4 @@
 const mongoose = require('mongoose');
-const mongooseHidden = require('mongoose-hidden')({
-  hidden: { _id: true, __v: true },
-});
 
 const SaleSchema = new mongoose.Schema({
   customer: {
@@ -28,17 +25,5 @@ const SaleSchema = new mongoose.Schema({
     required: true,
   },
 });
-
-// Duplicate the ID field.
-SaleSchema.virtual('id').get(function () {
-  return this._id.toHexString();
-});
-
-// Ensure virtual fields are serialised.
-SaleSchema.set('toJSON', {
-  virtuals: true,
-});
-
-SaleSchema.plugin(mongooseHidden);
 
 module.exports = mongoose.model('Sale', SaleSchema);
