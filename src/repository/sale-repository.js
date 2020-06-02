@@ -34,7 +34,7 @@ exports.create = async sale => {
 
 exports.list = async () => {
   return await Sale.find({})
-    .populate('seller', '-imageBase64')
+    .populate('seller', '-imageBase64 -password -roles -lastTimeLogin')
     .populate('customer', '-image')
     .populate('vehicle', '-pictures');
 };
