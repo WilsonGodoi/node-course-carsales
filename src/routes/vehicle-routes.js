@@ -100,12 +100,74 @@ routes.get(
  */
 routes.post('/', authService.isAdmin, VehicleController.create);
 
+/**
+ * @swagger
+ * /api/auth/vehicles/{id}/pictures:
+ *  post:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: Use to save a vehicle's picture, only administrators can access.
+ *      tags:
+ *          - name: Vehicles
+ *      parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        schema:
+ *         type: string
+ *        description: The vehicle ID
+ *      - in: body
+ *        name: user
+ *        description: The picture to save.
+ *        schema:
+ *          type: object
+ *          properties:
+ *            base64:
+ *              type: string
+ *      responses:
+ *          '201':
+ *              description: A succesful response
+ */
 routes.post(
   '/:id/pictures',
   authService.isAdmin,
   VehicleController.savePicture
 );
 
+/**
+ * @swagger
+ * /api/auth/vehicles/{id}/pictures/{pictureId}:
+ *  delete:
+ *      security:
+ *          - bearerAuth: []
+ *      summary: Use to save a vehicle's picture, only administrators can access.
+ *      tags:
+ *          - name: Vehicles
+ *      parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        schema:
+ *         type: string
+ *        description: The vehicle ID
+ *      - in: path
+ *        name: pictureId
+ *        required: true
+ *        schema:
+ *         type: string
+ *        description: The picture ID to delete.
+ *      - in: body
+ *        name: user
+ *        description: The picture to save.
+ *        schema:
+ *          type: object
+ *          properties:
+ *            base64:
+ *              type: string
+ *      responses:
+ *          '201':
+ *              description: A succesful response
+ */
 routes.delete(
   '/:id/pictures/:pictureId',
   authService.isAdmin,
