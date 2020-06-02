@@ -80,7 +80,7 @@ module.exports = {
       await userRepository.update(req.params.id, req.body);
       return res.status(200).json('Usuário alterado com sucesso!');
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 

@@ -11,7 +11,7 @@ module.exports = {
         password: md5(req.body.password + config.privateKey),
       });
       if (!user) {
-        return res.status(404).json('Usuário ou senha inválidos!');
+        return res.status(404).json({ message: 'Usuário ou senha inválidos!' });
       }
       if (!user.active) {
         return res
