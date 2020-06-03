@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const BrandSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: [true, 'Nome é obrigatório!'],
     trim: true,
     unique: true,
     uppercase: true,

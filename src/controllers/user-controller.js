@@ -40,7 +40,7 @@ module.exports = {
       const newUser = await userRepository.create(user);
       return res.status(201).json(newUser);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -53,7 +53,7 @@ module.exports = {
 
       return res.status(201).json('Avatar alterado com sucesso!');
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -62,7 +62,7 @@ module.exports = {
       const currentUser = await userRepository.getCurrent(req);
       return res.status(200).json(currentUser);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -71,7 +71,7 @@ module.exports = {
       const users = await userRepository.list();
       return res.status(200).json(users);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -102,7 +102,7 @@ module.exports = {
       await userRepository.updateOwnPassword(req, newPassword);
       return res.status(200).json('Senha alterada com sucesso!');
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 };

@@ -6,7 +6,7 @@ module.exports = {
       const brands = await brandRepository.list();
       return res.status(200).json(brands);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -17,7 +17,7 @@ module.exports = {
       const newBrand = await brandRepository.create({ name });
       return res.status(201).json(newBrand);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -35,7 +35,7 @@ module.exports = {
       });
       return res.status(200).json(editedBrand);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 };

@@ -8,7 +8,7 @@ module.exports = {
       const newVehicle = await vehicleRepository.create(vehicle);
       return res.status(201).json(newVehicle);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -19,7 +19,7 @@ module.exports = {
       await vehicleRepository.savePicture(req.params.id, picture);
       return res.status(201).json('Imagem inserida com sucesso!');
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -31,7 +31,7 @@ module.exports = {
       );
       return res.status(200).json('Imagem removida com sucesso!');
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -40,7 +40,7 @@ module.exports = {
       const vehicles = await vehicleRepository.list();
       return res.status(200).json(vehicles);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -49,7 +49,7 @@ module.exports = {
       const pictures = await vehicleRepository.listPictures(req.params.id);
       return res.status(200).json(pictures);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 };

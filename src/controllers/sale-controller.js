@@ -12,7 +12,7 @@ module.exports = {
       const newSale = await saleRepository.create(sale);
       return res.status(201).json(newSale);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -21,7 +21,7 @@ module.exports = {
       const sales = await saleRepository.list();
       return res.status(200).json(sales);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 };

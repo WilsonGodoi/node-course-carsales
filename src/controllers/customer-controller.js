@@ -14,7 +14,7 @@ module.exports = {
       const newCustomer = await customerRepository.create(customer);
       return res.status(201).json(newCustomer);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -23,7 +23,7 @@ module.exports = {
       const customers = await customerRepository.list();
       return res.status(200).json(customers);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 
@@ -43,7 +43,7 @@ module.exports = {
       });
       return res.status(200).json('Cliente alterado com sucesso!');
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     }
   },
 };
