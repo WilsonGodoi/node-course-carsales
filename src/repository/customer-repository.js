@@ -5,7 +5,7 @@ exports.getById = async id => {
 };
 
 exports.getByEmail = async email => {
-  return await Customer.find({ email });
+  return await Customer.findOne({ email });
 };
 
 exports.list = async () => {

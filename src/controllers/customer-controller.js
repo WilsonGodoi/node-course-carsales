@@ -8,7 +8,7 @@ module.exports = {
 
       const clientSearch = await customerRepository.getByEmail(email);
       if (clientSearch) {
-        return res.status(400).json('Cliente já cadastrado!');
+        return res.status(400).json({ message: 'Cliente já cadastrado!' });
       }
 
       const newCustomer = await customerRepository.create(customer);
