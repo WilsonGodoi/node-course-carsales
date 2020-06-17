@@ -1,4 +1,5 @@
 const vehicleRepository = require('../repository/vehicle-repository');
+const { VehicleStatuses } = require('../enums/vehicle-statuses');
 
 module.exports = {
   async create(req, res) {
@@ -7,6 +8,37 @@ module.exports = {
 
       const newVehicle = await vehicleRepository.create(vehicle);
       return res.status(201).json(newVehicle);
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
+    }
+  },
+
+  async update(req, res) {
+    try {
+      const currentVehicle = await vehicleRepository.get(req.params.id);
+      if (currentVehicle.status === VehicleStatuses.SOLD) {
+        throw new Error('Veículo já vendido!');
+      }
+
+      const vehicle = req.body;
+      const newVehicle = await vehicleRepository.update(req.params.id, vehicle);
+
+      return res.status(200).json(newVehicle);
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
+    }
+  },
+
+  async delete(req, res) {
+    try {
+      const currentVehicle = await vehicleRepository.get(req.params.id);
+      if (currentVehicle.status === VehicleStatuses.SOLD) {
+        throw new Error('Veículo já vendido!');
+      }
+
+      await vehicleRepository.delete(req.params.id);
+
+      return res.status(200).json('Veículo removido com sucesso!');
     } catch (error) {
       return res.status(400).json({ message: error.message });
     }

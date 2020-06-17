@@ -29,6 +29,36 @@ exports.create = async vehicle => {
   return await Vehicle.create(vehicle);
 };
 
+exports.update = async (_id, vehicle) => {
+  const {
+    brand,
+    model,
+    modelYear,
+    manufactureYear,
+    color,
+    mileage,
+    onlyOwner,
+    price,
+  } = vehicle;
+  await Vehicle.findByIdAndUpdate(_id, {
+    $set: {
+      brand,
+      model,
+      modelYear,
+      manufactureYear,
+      color,
+      mileage,
+      onlyOwner,
+      price,
+    },
+  });
+  return this.get(_id);
+};
+
+exports.delete = async _id => {
+  return await Vehicle.findByIdAndDelete(_id);
+};
+
 exports.savePicture = async (vehicleId, picture) => {
   const { pictures } = await Vehicle.findById(vehicleId);
   pictures.push(picture);

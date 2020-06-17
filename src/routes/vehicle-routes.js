@@ -100,6 +100,10 @@ routes.get(
  */
 routes.post('/', authService.isAdmin, VehicleController.create);
 
+routes.put('/:id', authService.isAdmin, VehicleController.update);
+
+routes.delete('/:id', authService.isAdmin, VehicleController.delete);
+
 /**
  * @swagger
  * /api/auth/vehicles/{id}/pictures:
