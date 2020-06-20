@@ -61,6 +61,9 @@ exports.delete = async _id => {
 
 exports.savePicture = async (vehicleId, picture) => {
   const { pictures } = await Vehicle.findById(vehicleId);
+  if (pictures.length > 2) {
+    throw new Error('Limite excedido, máximo de 3 imagens!');
+  }
   pictures.push(picture);
   return await Vehicle.findByIdAndUpdate(vehicleId, {
     $set: {

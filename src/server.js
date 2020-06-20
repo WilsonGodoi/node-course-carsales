@@ -21,12 +21,12 @@ mongoose
   .catch(error => console.error('Database connection error:', error));
 
 app.use(cors(config.corsOptions));
-app.use(express.json({ limit: '2mb' }));
+app.use(express.json({ limit: '200kb' }));
 app.use(express.urlencoded({ extended: false }));
 
 app.use((error, req, res, next) => {
   if (error.message === 'request entity too large') {
-    return res.status(413).json('Requisição maior que 2MB');
+    return res.status(413).json({ message: 'Requisição maior que 100KB' });
   } else {
     next();
   }
