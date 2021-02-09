@@ -1,4 +1,4 @@
-# Node Course Carsales
+# Node Course Carsales.
 
 Este projeto foi desenvolvido com Node.js, é a API para o curso de frontend com Angular.
 
